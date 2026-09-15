@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder/issues"
   },
-  "homepage": "https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder#readme"
+  "homepage": "https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
