@@ -1,0 +1,19 @@
+{
+  "name": "cs-study-group-tutoring-finder",
+  "version": "1.0.0",
+  "description": "The problem: Students studying for the same module often don't know classmates nearby who'd be willing to  form a study group, especially in large first-year classes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder/issues"
+  },
+  "homepage": "https://github.com/ConstantPeach14/CS-Study-Group-Tutoring-Finder#readme"
+}
