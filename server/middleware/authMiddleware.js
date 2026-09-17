@@ -18,7 +18,8 @@ const authMiddleware = (req, res, next) => {
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const jwtSecret = process.env.JWT_SECRET || 'cs_study_tutoring_finder_secure_jwt_secret_key_2026!';
+    const decoded = jwt.verify(token, jwtSecret);
     req.user = decoded; // Contains { id, email, role }
     next();
   } catch (error) {

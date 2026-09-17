@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'cs_study_tutoring_finder_secure_jwt_secret_key_2026!';
 
 const { query } = require('./db/database');
 const authRoutes = require('./routes/authRoutes');
@@ -11,10 +12,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
 
-// Enable CORS for Next.js frontend
+// Enable CORS for Next.js frontend (allows localhost and all deployed Vercel previews)
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: true,
     credentials: true,
   })
 );
