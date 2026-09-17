@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Updated Colour Theme: White, Purple, Light Green, Pink */
+  --bg-page: #fcfcfc;
+  --bg-card: #ffffff;
+  --bg-card-subtle: #f9fafb;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --purple: #7c3aed;
+  --purple-hover: #6d28d9;
+  --purple-subtle: #f5f3ff;
+  --purple-border: #a78bfa;
+
+  --light-green: #22c55e;
+  --light-green-hover: #16a34a;
+  --light-green-subtle: #f0fdf4;
+  --light-green-border: #86efac;
+
+  --pink: #ec4899;
+  --pink-hover: #db2777;
+  --pink-subtle: #fdf2f8;
+  --pink-border: #f472b6;
+
+  --border-neutral: #e2e8f0;
+  --border-neutral-dark: #cbd5e1;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Custom themed utility classes */
+.bg-purple {
+  background-color: var(--purple);
+}
+.bg-purple-hover:hover {
+  background-color: var(--purple-hover);
+}
+.text-purple {
+  color: var(--purple);
+}
+.border-purple {
+  border-color: var(--purple);
+}
+
+.bg-light-green {
+  background-color: var(--light-green);
+}
+.bg-light-green-hover:hover {
+  background-color: var(--light-green-hover);
+}
+.text-light-green {
+  color: var(--light-green);
+}
+.border-light-green {
+  border-color: var(--light-green);
+}
+.bg-light-green-subtle {
+  background-color: var(--light-green-subtle);
+}
+
+.ring-purple {
+  --tw-ring-color: var(--purple);
+}
+.ring-light-green {
+  --tw-ring-color: var(--light-green);
+}
+
+.bg-pink {
+  background-color: var(--pink);
+}
+.bg-pink-hover:hover {
+  background-color: var(--pink-hover);
+}
+.text-pink {
+  color: var(--pink);
+}
+.border-pink {
+  border-color: var(--pink);
+}
+.bg-pink-subtle {
+  background-color: var(--pink-subtle);
 }

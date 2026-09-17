@@ -4,6 +4,8 @@
   "description": "The problem: Students studying for the same module often don't know classmates nearby who'd be willing to  form a study group, especially in large first-year classes.",
   "main": "index.js",
   "scripts": {
+    "server": "npm --prefix server start",
+    "client": "npm --prefix client/my-app run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
