@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
-import { Users, GraduationCap, BookOpen, ArrowRight, CheckCircle2, Search, Sparkles } from 'lucide-react';
+import { Users, GraduationCap, BookOpen, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 export default function HomePage() {
   const { user } = useAuth();
