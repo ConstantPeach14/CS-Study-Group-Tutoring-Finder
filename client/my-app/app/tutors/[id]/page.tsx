@@ -187,7 +187,7 @@ export default function TutorDetailPage() {
         <div className="space-y-3">
           <Link
             href={`/login?redirect=/tutors/${tutorId}`}
-            className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold text-white bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors shadow-sm"
           >
             <Send className="w-4 h-4" />
             Log in to Request Tutoring
@@ -208,7 +208,7 @@ export default function TutorDetailPage() {
           </p>
           <Link
             href="/tutor/profile"
-            className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+            className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] transition-colors"
           >
             <Settings className="w-3.5 h-3.5" />
             Edit Tutor Profile
@@ -264,7 +264,7 @@ export default function TutorDetailPage() {
               </p>
               <div className="pt-2 border-t border-[#e89aae]/30 flex items-center gap-2 text-xs text-[#334155]">
                 <Mail className="w-3.5 h-3.5 text-[#d88299]" />
-                Contact: <span className="font-semibold text-white">{tutor.email}</span>
+                Contact: <span className="font-bold text-[#0f172a]">{tutor.email}</span>
               </div>
             </div>
 
@@ -293,7 +293,7 @@ export default function TutorDetailPage() {
 
             <button
               onClick={() => setShowRequestModal(true)}
-              className="w-full px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors"
             >
               Send New Request
             </button>
@@ -307,7 +307,7 @@ export default function TutorDetailPage() {
       <div className="space-y-2">
         <button
           onClick={() => setShowRequestModal(true)}
-          className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold text-white bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors shadow-md cursor-pointer"
+          className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors shadow-md cursor-pointer"
         >
           <Send className="w-4 h-4" />
           Request Tutoring
@@ -334,13 +334,13 @@ export default function TutorDetailPage() {
       <div className="min-h-screen bg-[#e8edf2] flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] p-8 text-center space-y-4">
           <AlertCircle className="w-10 h-10 text-[#d88299] mx-auto" />
-          <h1 className="text-lg font-bold text-white">{error || 'Tutor not found'}</h1>
+          <h1 className="text-lg font-bold text-[#0f172a]">{error || 'Tutor not found'}</h1>
           <p className="text-sm text-[#475569]">
             This peer tutor profile could not be located or may have been updated.
           </p>
           <Link
             href="/tutors"
-            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Tutors
@@ -363,7 +363,7 @@ export default function TutorDetailPage() {
             <div className="flex items-center justify-between border-b border-[#cbd5e1] pb-3">
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 text-[#d88299]" />
-                <h3 className="text-base font-bold text-white">
+                <h3 className="text-base font-bold text-[#0f172a]">
                   Request Tutoring from {tutor.name}
                 </h3>
               </div>
@@ -393,7 +393,7 @@ export default function TutorDetailPage() {
                   <select
                     value={selectedCourse}
                     onChange={(e) => setSelectedCourse(e.target.value)}
-                    className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-hidden focus:border-[#d88299] transition-colors"
+                    className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-3.5 py-2.5 text-sm text-[#0f172a] font-medium focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                     required
                   >
                     {courseList.map((code) => (
@@ -409,7 +409,7 @@ export default function TutorDetailPage() {
                     value={selectedCourse}
                     onChange={(e) => setSelectedCourse(e.target.value)}
                     placeholder="e.g., CSC101"
-                    className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-hidden focus:border-[#d88299] transition-colors"
+                    className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-3.5 py-2.5 text-sm text-[#0f172a] font-medium focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                     required
                   />
                 )}
@@ -418,7 +418,7 @@ export default function TutorDetailPage() {
                     type="text"
                     placeholder="Enter custom course code (e.g., INF201)"
                     onChange={(e) => setSelectedCourse(e.target.value)}
-                    className="w-full mt-2 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-3.5 py-2 text-sm text-white focus:outline-hidden focus:border-[#d88299]"
+                    className="w-full mt-2 bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-3.5 py-2 text-sm text-[#0f172a] font-medium focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299]"
                     required
                   />
                 )}
@@ -434,7 +434,7 @@ export default function TutorDetailPage() {
                   value={requestMessage}
                   onChange={(e) => setRequestMessage(e.target.value)}
                   placeholder="Describe the topics you'd like to cover (e.g., recursion, proof by induction, exam prep) and preferred meeting times..."
-                  className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl p-3 text-sm text-white placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] transition-colors"
+                  className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl p-3 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                   maxLength={1000}
                 />
                 <span className="text-[11px] text-[#64748b] float-right">
@@ -453,7 +453,7 @@ export default function TutorDetailPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors disabled:opacity-60 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] hover:text-white transition-colors disabled:opacity-60 cursor-pointer"
                 >
                   {isSubmitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   {isSubmitting ? 'Sending…' : 'Submit Request'}
@@ -499,7 +499,7 @@ export default function TutorDetailPage() {
                   <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#fce7ec] text-[#d88299] border border-[#e89aae]/40 text-xs font-semibold mb-1.5">
                     <ShieldCheck className="w-3.5 h-3.5" /> Verified University Tutor
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">
                     {tutor.name} {tutor.surname}
                   </h1>
                   <p className="text-xs text-[#475569] mt-0.5 flex items-center gap-1.5">
@@ -524,7 +524,7 @@ export default function TutorDetailPage() {
 
               {/* Bio */}
               <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] p-6 space-y-3 shadow-sm">
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wider flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-[#d88299]" />
                   About the Tutor
                 </h2>
@@ -535,7 +535,7 @@ export default function TutorDetailPage() {
 
               {/* Subjects & Modules */}
               <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] p-6 space-y-4 shadow-sm">
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wider flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-[#d88299]" />
                   Courses & Subjects
                 </h2>
@@ -576,7 +576,7 @@ export default function TutorDetailPage() {
               {/* Qualifications */}
               {tutor.qualifications && (
                 <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] p-6 space-y-2 shadow-sm">
-                  <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wider flex items-center gap-2">
                     <Award className="w-4 h-4 text-[#d88299]" />
                     Academic Credentials & Qualifications
                   </h2>
@@ -612,7 +612,7 @@ export default function TutorDetailPage() {
                 <dl className="space-y-2.5 text-xs">
                   <div className="flex justify-between py-1 border-b border-[#cbd5e1]">
                     <dt className="text-[#475569]">Role</dt>
-                    <dd className="font-semibold text-white capitalize">{tutor.role}</dd>
+                    <dd className="font-bold text-[#0f172a] capitalize">{tutor.role}</dd>
                   </div>
                   <div className="flex justify-between py-1 border-b border-[#cbd5e1]">
                     <dt className="text-[#475569]">Profile Status</dt>
@@ -620,7 +620,7 @@ export default function TutorDetailPage() {
                   </div>
                   <div className="flex justify-between py-1">
                     <dt className="text-[#475569]">Member Since</dt>
-                    <dd className="font-semibold text-white">{formatDate(tutor.user_created_at)}</dd>
+                    <dd className="font-bold text-[#0f172a]">{formatDate(tutor.user_created_at)}</dd>
                   </div>
                 </dl>
               </div>

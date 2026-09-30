@@ -178,7 +178,7 @@ export default function StudyGroupsCatalogPage() {
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fce7ec] border border-[#9c4f65]/40 text-[#d88299] text-xs font-semibold">
               <Users className="w-3.5 h-3.5" /> Module Study Groups
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] tracking-tight">
               Study Groups
             </h1>
             <p className="text-sm text-[#475569] leading-relaxed">
@@ -189,7 +189,7 @@ export default function StudyGroupsCatalogPage() {
 
           <button
             onClick={handleCreateGroupClick}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white bg-[#d88299] hover:bg-[#c46982] shadow-md transition-colors cursor-pointer shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] shadow-md transition-colors cursor-pointer shrink-0"
           >
             <PlusCircle className="w-4 h-4" />
             Create Study Group
@@ -207,7 +207,7 @@ export default function StudyGroupsCatalogPage() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search by course code or study group title..."
-                className="w-full pl-10 pr-9 py-2.5 text-sm rounded-xl border border-[#cbd5e1] focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] bg-[#e8edf2] text-white placeholder:text-[#64748b]"
+                className="w-full pl-10 pr-9 py-2.5 text-sm rounded-xl border-2 border-[#e89aae] focus:outline-hidden focus:ring-2 focus:ring-[#d88299] focus:border-[#d88299] bg-[#fce7ec] text-[#0f172a] font-medium placeholder:text-[#9c4f65]/60"
               />
               {searchInput && (
                 <button
@@ -226,7 +226,7 @@ export default function StudyGroupsCatalogPage() {
                 value={courseFilter}
                 onChange={(e) => setCourseFilter(e.target.value)}
                 disabled={myGroupsOnly}
-                className="w-full px-3 py-2.5 text-sm rounded-xl border border-[#cbd5e1] focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] bg-[#e8edf2] text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border-2 border-[#e89aae] focus:outline-hidden focus:ring-2 focus:ring-[#d88299] focus:border-[#d88299] bg-[#fce7ec] text-[#0f172a] font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="all">All Courses</option>
                 {availableCourses.map((code) => (
@@ -245,7 +245,7 @@ export default function StudyGroupsCatalogPage() {
                   setStatusFilter(e.target.value as 'all' | 'open' | 'full')
                 }
                 disabled={myGroupsOnly}
-                className="w-full px-3 py-2.5 text-sm rounded-xl border border-[#cbd5e1] focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] bg-[#e8edf2] text-white cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 py-2.5 text-sm rounded-xl border-2 border-[#e89aae] focus:outline-hidden focus:ring-2 focus:ring-[#d88299] focus:border-[#d88299] bg-[#fce7ec] text-[#0f172a] font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="all">All Statuses</option>
                 <option value="open">Open (Spots Available)</option>
@@ -282,7 +282,7 @@ export default function StudyGroupsCatalogPage() {
             </div>
 
             <div className="text-[#475569]">
-              Showing <span className="font-semibold text-white">{groups.length}</span>{' '}
+              Showing <span className="font-bold text-[#0f172a]">{groups.length}</span>{' '}
               {groups.length === 1 ? 'study group' : 'study groups'}
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function StudyGroupsCatalogPage() {
             <p className="text-xs text-red-300 max-w-md mx-auto">{error}</p>
             <button
               onClick={handleRetry}
-              className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[#d88299] hover:bg-[#c46982] cursor-pointer"
+              className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] cursor-pointer"
             >
               Try Again
             </button>
@@ -316,7 +316,7 @@ export default function StudyGroupsCatalogPage() {
               <BookOpen className="w-6 h-6" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-lg font-bold text-white">No study groups found</h3>
+              <h3 className="text-lg font-bold text-[#0f172a]">No study groups found</h3>
               <p className="text-sm text-[#475569] max-w-md mx-auto">
                 {hasActiveFilters
                   ? 'No study groups match your current filter criteria. Try adjusting your search keywords or resetting filters.'
@@ -333,7 +333,7 @@ export default function StudyGroupsCatalogPage() {
             ) : (
               <button
                 onClick={handleCreateGroupClick}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#d88299] hover:bg-[#c46982] shadow-md cursor-pointer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] shadow-md cursor-pointer"
               >
                 <PlusCircle className="w-4 h-4" />
                 Create First Study Group
@@ -375,7 +375,7 @@ export default function StudyGroupsCatalogPage() {
 
                     {/* Group Title & Description */}
                     <div>
-                      <h2 className="text-lg font-bold text-white leading-snug line-clamp-1">
+                      <h2 className="text-lg font-bold text-[#0f172a] leading-snug line-clamp-1">
                         {group.title}
                       </h2>
                       <p className="mt-1.5 text-xs text-[#475569] line-clamp-2 leading-relaxed">
@@ -399,7 +399,7 @@ export default function StudyGroupsCatalogPage() {
                     <div className="space-y-1.5 pt-2">
                       <div className="flex justify-between items-center text-xs">
                         <span className="text-[#475569] font-medium">Capacity</span>
-                        <span className="font-semibold text-white">
+                        <span className="font-bold text-[#0f172a]">
                           {group.member_count} / {group.max_members} members
                         </span>
                       </div>
@@ -443,7 +443,7 @@ export default function StudyGroupsCatalogPage() {
                     ) : group.is_creator ? (
                       <Link
                         href={`/study-groups/${group.id}/edit`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] transition-colors"
                       >
                         <ShieldCheck className="w-3.5 h-3.5" />
                         Manage
@@ -460,7 +460,7 @@ export default function StudyGroupsCatalogPage() {
                     ) : (
                       <Link
                         href={`/study-groups/${group.id}`}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+                        className="px-3 py-1.5 rounded-lg text-xs font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] transition-colors"
                       >
                         Join Group
                       </Link>

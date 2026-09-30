@@ -85,7 +85,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="student@university.edu"
-                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                 />
               </div>
             </div>
@@ -104,7 +104,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                 />
               </div>
             </div>

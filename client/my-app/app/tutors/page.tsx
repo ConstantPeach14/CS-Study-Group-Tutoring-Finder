@@ -191,7 +191,7 @@ export default function TutorsCatalogPage() {
                 placeholder="Search by tutor name, subject (e.g., Algorithms), course code, or bio..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                 aria-label="Search peer tutors"
               />
             </div>
@@ -205,7 +205,7 @@ export default function TutorsCatalogPage() {
                 <select
                   value={courseFilter}
                   onChange={(e) => setCourseFilter(e.target.value)}
-                  className="bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-3 py-2 text-sm text-[#334155] focus:outline-hidden focus:border-[#d88299] transition-colors cursor-pointer"
+                  className="bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-3 py-2 text-sm text-[#0f172a] font-medium focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors cursor-pointer"
                   aria-label="Filter by course code"
                 >
                   <option value="all">All Courses</option>

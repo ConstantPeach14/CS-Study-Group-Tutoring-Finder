@@ -335,7 +335,7 @@ export default function EditStudyGroupPage() {
           <div className="w-14 h-14 rounded-2xl bg-red-950/40 border border-red-800/60 flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-7 h-7 text-red-400" />
           </div>
-          <h1 className="text-lg font-bold text-white mb-2">
+          <h1 className="text-lg font-bold text-[#0f172a] mb-2">
             {loadError || 'Study group not found'}
           </h1>
           <p className="text-sm text-[#475569] mb-6">
@@ -362,7 +362,7 @@ export default function EditStudyGroupPage() {
           <div className="w-14 h-14 rounded-2xl bg-amber-950/40 border border-amber-800/60 flex items-center justify-center mx-auto mb-4">
             <ShieldOff className="w-7 h-7 text-amber-400" />
           </div>
-          <h1 className="text-lg font-bold text-white mb-2">Access Denied</h1>
+          <h1 className="text-lg font-bold text-[#0f172a] mb-2">Access Denied</h1>
           <p className="text-sm text-[#475569] mb-6">
             Only the creator of this study group can edit it.
           </p>
@@ -394,7 +394,7 @@ export default function EditStudyGroupPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to Group
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] leading-tight">
             Edit Study Group
           </h1>
           <p className="mt-1.5 text-sm text-[#475569]">
@@ -429,7 +429,7 @@ export default function EditStudyGroupPage() {
             <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
                 <BookOpen className="w-4 h-4 text-[#d88299]" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wide">
+                <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wide">
                   Basic Information
                 </h2>
               </div>
@@ -455,8 +455,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.title}
                   className={`w-full px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.title
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white placeholder:text-[#64748b]'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] placeholder:text-[#9c4f65]/60 font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 {fieldErrors.title && (
@@ -488,8 +488,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.course_code}
                   className={`w-full px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.course_code
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white placeholder:text-[#64748b]'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] placeholder:text-[#9c4f65]/60 font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 {fieldErrors.course_code && (
@@ -521,8 +521,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.description}
                   className={`w-full px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] resize-y disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.description
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white placeholder:text-[#64748b]'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] placeholder:text-[#9c4f65]/60 font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 {fieldErrors.description && (
@@ -538,7 +538,7 @@ export default function EditStudyGroupPage() {
             <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6 space-y-5">
               <div className="flex items-center gap-2 mb-1">
                 <Calendar className="w-4 h-4 text-[#d88299]" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wide">
+                <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wide">
                   Logistics
                 </h2>
               </div>
@@ -564,8 +564,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.meeting_schedule}
                   className={`w-full px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.meeting_schedule
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white placeholder:text-[#64748b]'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] placeholder:text-[#9c4f65]/60 font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 {fieldErrors.meeting_schedule && (
@@ -600,8 +600,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.location}
                   className={`w-full px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.location
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white placeholder:text-[#64748b]'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] placeholder:text-[#9c4f65]/60 font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 {fieldErrors.location && (
@@ -617,7 +617,7 @@ export default function EditStudyGroupPage() {
             <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Users className="w-4 h-4 text-[#d88299]" />
-                <h2 className="text-sm font-bold text-white uppercase tracking-wide">
+                <h2 className="text-sm font-bold text-[#0f172a] uppercase tracking-wide">
                   Capacity
                 </h2>
               </div>
@@ -639,8 +639,8 @@ export default function EditStudyGroupPage() {
                   aria-invalid={!!fieldErrors.max_members}
                   className={`w-32 px-3.5 py-2.5 text-sm rounded-xl border transition-colors focus:outline-hidden focus:ring-1 focus:ring-[#d88299] focus:border-[#d88299] disabled:opacity-50 disabled:cursor-not-allowed ${
                     fieldErrors.max_members
-                      ? 'border-red-500/80 bg-red-950/30 text-white'
-                      : 'border-[#cbd5e1] bg-[#e8edf2] text-white'
+                      ? 'border-2 border-red-400 bg-red-50 text-red-900'
+                      : 'border-2 border-[#e89aae] bg-[#fce7ec] text-[#0f172a] font-medium focus:bg-[#fdf2f5]'
                   }`}
                 />
                 <span className="text-sm text-[#475569]">
@@ -673,7 +673,7 @@ export default function EditStudyGroupPage() {
               <button
                 type="submit"
                 disabled={isSubmitting || !!submitSuccess}
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-[#0f172a] bg-[#d88299] hover:bg-[#c46982] transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
                 aria-label="Save changes"
               >
                 {isSubmitting ? (

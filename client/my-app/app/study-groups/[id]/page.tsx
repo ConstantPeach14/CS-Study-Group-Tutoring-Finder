@@ -163,7 +163,7 @@ function ConfirmDialog({
     >
       <div className="bg-[#f1f4f8] rounded-2xl shadow-2xl border border-[#cbd5e1] max-w-sm w-full p-6 text-[#0f172a]">
         <div className="flex items-start justify-between mb-3">
-          <h2 id="confirm-dialog-title" className="text-base font-bold text-white">
+          <h2 id="confirm-dialog-title" className="text-base font-bold text-[#0f172a]">
             {title}
           </h2>
           <button
@@ -373,7 +373,7 @@ export default function StudyGroupDetailPage() {
           <div className="w-14 h-14 rounded-2xl bg-red-950/40 border border-red-800/60 flex items-center justify-center mx-auto mb-4">
             <AlertCircle className="w-7 h-7 text-red-400" />
           </div>
-          <h1 className="text-lg font-bold text-white mb-2">
+          <h1 className="text-lg font-bold text-[#0f172a] mb-2">
             {error || 'Study group not found'}
           </h1>
           <p className="text-sm text-[#475569] mb-6">
@@ -551,7 +551,7 @@ export default function StudyGroupDetailPage() {
                   <BookOpen className="w-3.5 h-3.5" />
                   {group.course_code}
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight break-words">
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] leading-tight break-words">
                   {group.title}
                 </h1>
                 <p className="mt-1.5 text-sm text-[#475569]">
@@ -588,7 +588,7 @@ export default function StudyGroupDetailPage() {
 
               {/* About */}
               <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6" aria-labelledby="section-about">
-                <h2 id="section-about" className="text-base font-bold text-white mb-3">
+                <h2 id="section-about" className="text-base font-bold text-[#0f172a] mb-3">
                   About this Group
                 </h2>
                 {group.description ? (
@@ -602,7 +602,7 @@ export default function StudyGroupDetailPage() {
 
               {/* Logistics */}
               <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6" aria-labelledby="section-logistics">
-                <h2 id="section-logistics" className="text-base font-bold text-white mb-4">
+                <h2 id="section-logistics" className="text-base font-bold text-[#0f172a] mb-4">
                   Logistics
                 </h2>
                 <div className="space-y-4">
@@ -614,7 +614,7 @@ export default function StudyGroupDetailPage() {
                       <p className="text-xs font-semibold text-[#475569] uppercase tracking-wide mb-0.5">
                         Meeting Schedule
                       </p>
-                      <p className="text-sm text-white font-medium">{group.meeting_schedule}</p>
+                      <p className="text-sm text-[#0f172a] font-medium">{group.meeting_schedule}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -625,7 +625,7 @@ export default function StudyGroupDetailPage() {
                       <p className="text-xs font-semibold text-[#475569] uppercase tracking-wide mb-0.5">
                         Location
                       </p>
-                      <p className="text-sm text-white font-medium">{group.location}</p>
+                      <p className="text-sm text-[#0f172a] font-medium">{group.location}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -636,7 +636,7 @@ export default function StudyGroupDetailPage() {
                       <p className="text-xs font-semibold text-[#475569] uppercase tracking-wide mb-0.5">
                         Last Updated
                       </p>
-                      <p className="text-sm text-white font-medium">{formatDate(group.updated_at)}</p>
+                      <p className="text-sm text-[#0f172a] font-medium">{formatDate(group.updated_at)}</p>
                     </div>
                   </div>
                 </div>
@@ -644,7 +644,7 @@ export default function StudyGroupDetailPage() {
 
               {/* Members */}
               <section className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-xl p-6" aria-labelledby="section-members">
-                <h2 id="section-members" className="text-base font-bold text-white mb-4">
+                <h2 id="section-members" className="text-base font-bold text-[#0f172a] mb-4">
                   Members
                   <span className="ml-2 text-sm font-semibold text-[#475569]">
                     ({group.member_count}/{group.max_members})
@@ -679,7 +679,7 @@ export default function StudyGroupDetailPage() {
                           {getInitials(member.name, member.surname)}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold text-white truncate">
+                          <p className="text-sm font-semibold text-[#0f172a] truncate">
                             {member.name} {member.surname}
                             {member.is_creator && (
                               <span className="ml-1.5 inline-flex items-center gap-0.5 text-[10px] font-bold text-[#d88299]">
@@ -722,7 +722,7 @@ export default function StudyGroupDetailPage() {
                 <div className="mb-5">
                   <div className="flex justify-between items-center text-xs mb-1.5">
                     <span className="font-semibold text-[#475569]">Capacity</span>
-                    <span className="font-bold text-white">
+                    <span className="font-bold text-[#0f172a]">
                       {group.member_count} / {group.max_members} members
                     </span>
                   </div>
@@ -780,7 +780,7 @@ export default function StudyGroupDetailPage() {
                     {getInitials(group.creator.name, group.creator.surname)}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">
+                    <p className="text-sm font-semibold text-[#0f172a] truncate">
                       {group.creator.name} {group.creator.surname}
                     </p>
                     <p className="text-xs text-[#475569] capitalize">
@@ -799,11 +799,11 @@ export default function StudyGroupDetailPage() {
                 <dl className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <dt className="text-[#475569]">Course</dt>
-                    <dd className="font-semibold text-white">{group.course_code}</dd>
+                    <dd className="font-semibold text-[#0f172a]">{group.course_code}</dd>
                   </div>
                   <div className="flex justify-between text-sm">
                     <dt className="text-[#475569]">Members</dt>
-                    <dd className="font-semibold text-white">
+                    <dd className="font-semibold text-[#0f172a]">
                       {group.member_count} / {group.max_members}
                     </dd>
                   </div>
@@ -815,7 +815,7 @@ export default function StudyGroupDetailPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <dt className="text-[#475569]">Created</dt>
-                    <dd className="font-semibold text-white">{formatDate(group.created_at)}</dd>
+                    <dd className="font-semibold text-[#0f172a]">{formatDate(group.created_at)}</dd>
                   </div>
                 </dl>
               </div>

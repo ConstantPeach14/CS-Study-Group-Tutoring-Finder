@@ -234,7 +234,7 @@ export default function TutorProfilePage() {
                       placeholder="e.g., Computer Science, Discrete Mathematics, Data Structures"
                       value={formData.subjects}
                       onChange={(e) => setFormData({ ...formData, subjects: e.target.value })}
-                      className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                      className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                       maxLength={255}
                       required
                     />
@@ -253,7 +253,7 @@ export default function TutorProfilePage() {
                       placeholder="e.g., CSC101, CSC102, MAM100, INF202"
                       value={formData.course_codes}
                       onChange={(e) => setFormData({ ...formData, course_codes: e.target.value })}
-                      className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors uppercase"
+                      className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors uppercase"
                       maxLength={255}
                       required
                     />
@@ -272,7 +272,7 @@ export default function TutorProfilePage() {
                       placeholder="e.g., Mondays & Thursdays 14:00 - 18:00, Saturday mornings"
                       value={formData.availability}
                       onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
-                      className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                      className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                       maxLength={255}
                       required
                     />
@@ -288,7 +288,7 @@ export default function TutorProfilePage() {
                       placeholder="e.g., 2nd Year BSc Computer Science (Dean's Merit List, Distinction in CSC101)"
                       value={formData.qualifications}
                       onChange={(e) => setFormData({ ...formData, qualifications: e.target.value })}
-                      className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                      className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl px-4 py-2.5 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                       maxLength={255}
                     />
                   </div>
@@ -303,7 +303,7 @@ export default function TutorProfilePage() {
                       placeholder="Share your background, study methods, and how you assist students with difficult concepts..."
                       value={formData.bio}
                       onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                      className="w-full bg-[#e8edf2] border border-[#cbd5e1] rounded-xl p-3 text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                      className="w-full bg-[#fce7ec] border-2 border-[#e89aae] rounded-xl p-3 text-sm text-[#0f172a] font-medium placeholder-[#9c4f65]/60 focus:outline-hidden focus:border-[#d88299] focus:ring-2 focus:ring-[#d88299] transition-colors"
                       maxLength={1000}
                     />
                     <span className="text-[11px] text-[#64748b] float-right">

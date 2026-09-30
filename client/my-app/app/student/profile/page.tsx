@@ -45,7 +45,7 @@ export default function StudentProfilePage() {
                     <Shield className="w-3.5 h-3.5" />
                     Verified Student Account
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a]">
                     {user?.name} {user?.surname}
                   </h1>
                   <p className="text-sm text-[#475569] mt-0.5">{user?.email}</p>
@@ -60,43 +60,43 @@ export default function StudentProfilePage() {
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#fce7ec] border-2 border-[#e89aae] shadow-xs">
                   <User className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-[#475569]">First Name</span>
-                    <span className="text-sm font-semibold text-white">{user?.name}</span>
+                    <span className="block text-xs font-bold text-[#9c4f65] uppercase tracking-wider mb-0.5">First Name</span>
+                    <span className="text-base font-bold text-[#0f172a]">{user?.name}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#fce7ec] border-2 border-[#e89aae] shadow-xs">
                   <User className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-[#475569]">Surname</span>
-                    <span className="text-sm font-semibold text-white">{user?.surname}</span>
+                    <span className="block text-xs font-bold text-[#9c4f65] uppercase tracking-wider mb-0.5">Surname</span>
+                    <span className="text-base font-bold text-[#0f172a]">{user?.surname}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#fce7ec] border-2 border-[#e89aae] shadow-xs">
                   <Mail className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-[#475569]">Email Address</span>
-                    <span className="text-sm font-semibold text-white">{user?.email}</span>
+                    <span className="block text-xs font-bold text-[#9c4f65] uppercase tracking-wider mb-0.5">Email Address</span>
+                    <span className="text-base font-bold text-[#0f172a]">{user?.email}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#fce7ec] border-2 border-[#e89aae] shadow-xs">
                   <Shield className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-[#475569]">Assigned Role</span>
-                    <span className="text-sm font-semibold text-[#d88299] capitalize">{user?.role}</span>
+                    <span className="block text-xs font-bold text-[#9c4f65] uppercase tracking-wider mb-0.5">Assigned Role</span>
+                    <span className="text-base font-bold text-[#9c4f65] capitalize">{user?.role}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1] sm:col-span-2">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#fce7ec] border-2 border-[#e89aae] shadow-xs sm:col-span-2">
                   <Calendar className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-[#475569]">Member Since</span>
-                    <span className="text-sm font-semibold text-white">{formattedDate}</span>
+                    <span className="block text-xs font-bold text-[#9c4f65] uppercase tracking-wider mb-0.5">Member Since</span>
+                    <span className="text-base font-bold text-[#0f172a]">{formattedDate}</span>
                   </div>
                 </div>
               </div>
