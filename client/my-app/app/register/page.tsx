@@ -33,7 +33,6 @@ export default function RegisterPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    // Frontend validation
     if (!formData.name.trim() || !formData.surname.trim()) {
       setErrorMessage('Please enter both your name and surname.');
       return;
@@ -84,33 +83,33 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-50">
+    <div className="flex-1 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[#e8edf2] text-[#0f172a]">
       <div className="sm:mx-auto sm:w-full sm:max-w-lg text-center">
-        <div className="mx-auto w-12 h-12 rounded-xl bg-purple flex items-center justify-center text-white shadow-xs mb-3">
-          <BookOpen className="w-6 h-6" />
+        <div className="mx-auto w-12 h-12 rounded-2xl bg-[#fce7ec] border border-[#e89aae] flex items-center justify-center text-[#9c4f65] shadow-sm mb-3">
+          <BookOpen className="w-6 h-6 stroke-[2.2]" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] tracking-tight">
           Create Your Account
         </h2>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-[#475569]">
           Join your university peer study and tutoring network
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg px-4 sm:px-0">
-        <div className="bg-white py-8 px-6 sm:px-10 rounded-xl shadow-xs border border-slate-200">
+        <div className="bg-[#f1f4f8] py-8 px-6 sm:px-10 rounded-2xl shadow-md border border-[#cbd5e1]">
           {/* Error Alert Box */}
           {errorMessage && (
-            <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
-              <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+            <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-xl bg-[#fce7ec] border border-[#e89aae] text-[#9c4f65] text-sm">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           {/* Success Alert Box */}
           {successMessage && (
-            <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-xl bg-[#fce7ec] border border-[#e89aae] text-[#9c4f65] text-sm">
+              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
               <span>{successMessage}</span>
             </div>
           )}
@@ -119,7 +118,7 @@ export default function RegisterPage() {
             {/* Name & Surname grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label htmlFor="name" className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-1">
                   First Name
                 </label>
                 <input
@@ -130,12 +129,12 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Jane"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#cbd5e1] bg-[#e8edf2] text-[#0f172a] text-sm focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors placeholder:text-[#94a3b8]"
                 />
               </div>
 
               <div>
-                <label htmlFor="surname" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label htmlFor="surname" className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-1">
                   Surname
                 </label>
                 <input
@@ -146,14 +145,14 @@ export default function RegisterPage() {
                   value={formData.surname}
                   onChange={handleChange}
                   placeholder="Doe"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#cbd5e1] bg-[#e8edf2] text-[#0f172a] text-sm focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors placeholder:text-[#94a3b8]"
                 />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label htmlFor="email" className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-1">
                 Email Address
               </label>
               <input
@@ -165,21 +164,21 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="student@university.edu"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#cbd5e1] bg-[#e8edf2] text-[#0f172a] text-sm focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors placeholder:text-[#94a3b8]"
               />
             </div>
 
             {/* Role Selection */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-2">
                 Select Your Role
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <label
-                  className={`flex flex-col items-center justify-center p-3 rounded-lg border cursor-pointer transition-all ${
+                  className={`flex flex-col items-center justify-center p-3.5 rounded-xl border cursor-pointer transition-all ${
                     formData.role === 'student'
-                      ? 'border-purple bg-slate-50 text-purple font-semibold ring-1 ring-purple'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'border-[#d88299] bg-[#fce7ec] text-[#9c4f65] font-semibold ring-1 ring-[#d88299]'
+                      : 'border-[#cbd5e1] bg-[#e8edf2] text-[#475569] hover:border-[#d88299]'
                   }`}
                 >
                   <input
@@ -190,16 +189,16 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className="sr-only"
                   />
-                  <Users className="w-5 h-5 mb-1 text-purple" />
-                  <span className="text-sm">Student</span>
-                  <span className="text-[11px] text-slate-500 font-normal">Join study groups</span>
+                  <Users className="w-5 h-5 mb-1 text-[#d88299]" />
+                  <span className="text-sm font-semibold">Student</span>
+                  <span className="text-[11px] text-[#64748b] font-normal">Join study groups</span>
                 </label>
 
                 <label
-                  className={`flex flex-col items-center justify-center p-3 rounded-lg border cursor-pointer transition-all ${
+                  className={`flex flex-col items-center justify-center p-3.5 rounded-xl border cursor-pointer transition-all ${
                     formData.role === 'tutor'
-                      ? 'border-purple bg-slate-50 text-purple font-semibold ring-1 ring-purple'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                      ? 'border-[#d88299] bg-[#fce7ec] text-[#9c4f65] font-semibold ring-1 ring-[#d88299]'
+                      : 'border-[#cbd5e1] bg-[#e8edf2] text-[#475569] hover:border-[#d88299]'
                   }`}
                 >
                   <input
@@ -210,9 +209,9 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className="sr-only"
                   />
-                  <GraduationCap className="w-5 h-5 mb-1 text-light-green" />
-                  <span className="text-sm">Tutor</span>
-                  <span className="text-[11px] text-slate-500 font-normal">Provide tutoring</span>
+                  <GraduationCap className="w-5 h-5 mb-1 text-[#d88299]" />
+                  <span className="text-sm font-semibold">Tutor</span>
+                  <span className="text-[11px] text-[#64748b] font-normal">Provide tutoring</span>
                 </label>
               </div>
             </div>
@@ -220,7 +219,7 @@ export default function RegisterPage() {
             {/* Passwords */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="password" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label htmlFor="password" className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-1">
                   Password
                 </label>
                 <input
@@ -231,12 +230,12 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Min 6 characters"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#cbd5e1] bg-[#e8edf2] text-[#0f172a] text-sm focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors placeholder:text-[#94a3b8]"
                 />
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                <label htmlFor="confirmPassword" className="block text-xs font-semibold text-[#334155] uppercase tracking-wider mb-1">
                   Confirm Password
                 </label>
                 <input
@@ -247,7 +246,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Repeat password"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#cbd5e1] bg-[#e8edf2] text-[#0f172a] text-sm focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors placeholder:text-[#94a3b8]"
                 />
               </div>
             </div>
@@ -256,7 +255,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-semibold text-white bg-purple hover:bg-purple-hover shadow-xs transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-white bg-[#d88299] hover:bg-[#c46982] shadow-md transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
@@ -273,10 +272,10 @@ export default function RegisterPage() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 text-center">
-            <p className="text-sm text-slate-600">
+          <div className="mt-6 pt-6 border-t border-[#cbd5e1] text-center">
+            <p className="text-sm text-[#475569]">
               Already registered?{' '}
-              <Link href="/login" className="font-semibold text-light-green hover:underline">
+              <Link href="/login" className="font-semibold text-[#9c4f65] hover:underline">
                 Sign in to your account
               </Link>
             </p>

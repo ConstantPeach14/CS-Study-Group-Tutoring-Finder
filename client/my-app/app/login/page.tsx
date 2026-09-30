@@ -48,90 +48,93 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-slate-50">
+    <div className="flex-1 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[#e8edf2] text-[#0f172a]">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="mx-auto w-12 h-12 rounded-xl bg-purple flex items-center justify-center text-white shadow-xs mb-3">
-          <BookOpen className="w-6 h-6" />
+        <div className="mx-auto w-12 h-12 rounded-2xl bg-[#fce7ec] border border-[#e89aae] flex items-center justify-center text-[#9c4f65] shadow-sm mb-3">
+          <BookOpen className="w-6 h-6 stroke-[2.2]" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] tracking-tight">
           Sign In to Your Account
         </h2>
-        <p className="mt-2 text-sm text-slate-600">
+        <p className="mt-2 text-sm text-[#475569]">
           Access your student or tutor study portal
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
-        <div className="bg-white py-8 px-6 sm:px-10 rounded-xl shadow-xs border border-slate-200">
-          {/* Error Alert Box */}
+        <div className="bg-[#f1f4f8] py-8 px-4 shadow-md border border-[#cbd5e1] sm:rounded-2xl sm:px-10">
           {errorMessage && (
-            <div className="mb-5 flex items-start gap-2.5 p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
-              <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+            <div className="mb-6 rounded-xl bg-[#fce7ec] border border-[#e89aae] p-4 text-sm text-[#9c4f65] flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                University Email Address
+              <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#334155]">
+                Email Address
               </label>
-              <input
-                id="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="student@university.edu"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
-              />
+              <div className="mt-1.5">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="student@university.edu"
+                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                />
+              </div>
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label htmlFor="password" className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                  Password
-                </label>
+              <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#334155]">
+                Password
+              </label>
+              <div className="mt-1.5">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="appearance-none block w-full px-3.5 py-2.5 bg-[#e8edf2] border border-[#cbd5e1] rounded-xl text-sm text-[#0f172a] placeholder-[#94a3b8] focus:outline-hidden focus:border-[#d88299] focus:ring-1 focus:ring-[#d88299] transition-colors"
+                />
               </div>
-              <input
-                id="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:border-light-green focus:ring-1 focus:ring-light-green transition-colors"
-              />
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-purple hover:bg-purple-hover shadow-xs transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                <>
-                  <LogIn className="w-4 h-4" />
-                  Sign In
-                </>
-              )}
-            </button>
+            <div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex justify-center items-center gap-2 py-3 px-4 rounded-xl text-sm font-bold text-white bg-[#d88299] hover:bg-[#c46982] focus:outline-hidden shadow-sm transition-colors disabled:opacity-60 cursor-pointer"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="w-4 h-4" />
+                    Sign In
+                  </>
+                )}
+              </button>
+            </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 text-center">
-            <p className="text-sm text-slate-600">
-              Do not have an account?{' '}
-              <Link href="/register" className="font-semibold text-light-green hover:underline">
-                Register as Student or Tutor
-              </Link>
-            </p>
+          <div className="mt-6 border-t border-[#cbd5e1] pt-6 text-center text-xs text-[#475569]">
+            Don&apos;t have an account yet?{' '}
+            <Link href="/register" className="font-bold text-[#9c4f65] hover:underline">
+              Register as Student or Tutor
+            </Link>
           </div>
         </div>
       </div>

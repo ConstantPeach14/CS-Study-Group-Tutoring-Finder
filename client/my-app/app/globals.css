@@ -1,32 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  /* Updated Colour Theme: White, Purple, Light Green, Pink */
-  --bg-page: #fcfcfc;
-  --bg-card: #ffffff;
-  --bg-card-subtle: #f9fafb;
+  /* Project-Wide Visual Theme: Light Grey + Dusty Pink / Light Pink (Zero Green, Zero White) */
+  --bg-page: #e8edf2;
+  --bg-card: #f1f4f8;
+  --bg-card-subtle: #dce3ec;
 
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
   --text-muted: #64748b;
 
-  --purple: #7c3aed;
-  --purple-hover: #6d28d9;
-  --purple-subtle: #f5f3ff;
-  --purple-border: #a78bfa;
+  /* Primary Accent: Dusty Pink & Light Pink */
+  --dusty-pink: #d88299;
+  --dusty-pink-hover: #c46982;
+  --dusty-pink-subtle: #fce7ec;
+  --dusty-pink-border: #e89aae;
+  --dusty-pink-text: #9c4f65;
 
-  --light-green: #22c55e;
-  --light-green-hover: #16a34a;
-  --light-green-subtle: #f0fdf4;
-  --light-green-border: #86efac;
+  --purple: var(--dusty-pink);
+  --purple-hover: var(--dusty-pink-hover);
+  --purple-subtle: var(--dusty-pink-subtle);
+  --purple-border: var(--dusty-pink-border);
 
-  --pink: #ec4899;
-  --pink-hover: #db2777;
-  --pink-subtle: #fdf2f8;
-  --pink-border: #f472b6;
+  --pink: var(--dusty-pink);
+  --pink-hover: var(--dusty-pink-hover);
+  --pink-subtle: var(--dusty-pink-subtle);
+  --pink-border: var(--dusty-pink-border);
 
-  --border-neutral: #e2e8f0;
-  --border-neutral-dark: #cbd5e1;
+  /* Status accents mapped to Dusty Pink / Light Pink (no green allowed) */
+  --light-green: var(--dusty-pink-text);
+  --light-green-hover: var(--dusty-pink-hover);
+  --light-green-subtle: var(--dusty-pink-subtle);
+  --light-green-border: var(--dusty-pink-border);
+
+  --border-neutral: #cbd5e1;
+  --border-neutral-dark: #94a3b8;
 }
 
 body {
@@ -40,53 +48,87 @@ body {
 
 /* Custom themed utility classes */
 .bg-purple {
-  background-color: var(--purple);
+  background-color: var(--dusty-pink);
 }
 .bg-purple-hover:hover {
-  background-color: var(--purple-hover);
+  background-color: var(--dusty-pink-hover);
 }
 .text-purple {
-  color: var(--purple);
+  color: var(--dusty-pink-text);
 }
 .border-purple {
-  border-color: var(--purple);
+  border-color: var(--dusty-pink-border);
 }
 
+.bg-dusty-pink {
+  background-color: var(--dusty-pink);
+}
+.bg-dusty-pink-hover:hover {
+  background-color: var(--dusty-pink-hover);
+}
+.text-dusty-pink {
+  color: var(--dusty-pink-text);
+}
+.border-dusty-pink {
+  border-color: var(--dusty-pink-border);
+}
+.bg-dusty-pink-subtle {
+  background-color: var(--dusty-pink-subtle);
+}
+
+/* Map green tokens to Dusty Pink / Light Pink to eliminate all green */
 .bg-light-green {
-  background-color: var(--light-green);
+  background-color: var(--dusty-pink);
 }
 .bg-light-green-hover:hover {
-  background-color: var(--light-green-hover);
+  background-color: var(--dusty-pink-hover);
 }
 .text-light-green {
-  color: var(--light-green);
+  color: var(--dusty-pink-text);
 }
 .border-light-green {
-  border-color: var(--light-green);
+  border-color: var(--dusty-pink-border);
 }
 .bg-light-green-subtle {
-  background-color: var(--light-green-subtle);
+  background-color: var(--dusty-pink-subtle);
 }
 
 .ring-purple {
-  --tw-ring-color: var(--purple);
+  --tw-ring-color: var(--dusty-pink);
+}
+.ring-dusty-pink {
+  --tw-ring-color: var(--dusty-pink);
 }
 .ring-light-green {
-  --tw-ring-color: var(--light-green);
+  --tw-ring-color: var(--dusty-pink);
 }
 
 .bg-pink {
-  background-color: var(--pink);
+  background-color: var(--dusty-pink);
 }
 .bg-pink-hover:hover {
-  background-color: var(--pink-hover);
+  background-color: var(--dusty-pink-hover);
 }
 .text-pink {
-  color: var(--pink);
+  color: var(--dusty-pink-text);
 }
 .border-pink {
-  border-color: var(--pink);
+  border-color: var(--dusty-pink-border);
 }
 .bg-pink-subtle {
-  background-color: var(--pink-subtle);
+  background-color: var(--dusty-pink-subtle);
+}
+
+/* Light Grey Theme Utility Helpers */
+.bg-light-page {
+  background-color: var(--bg-page);
+}
+.bg-light-card {
+  background-color: var(--bg-card);
+}
+.bg-light-card-subtle {
+  background-color: var(--bg-card-subtle);
+}
+.border-light-border {
+  border-color: var(--border-neutral);
 }

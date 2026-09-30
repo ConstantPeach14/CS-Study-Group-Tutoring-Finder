@@ -30,4 +30,22 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+const optionalAuth = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.split(' ')[1];
+      if (token) {
+        const jwtSecret = process.env.JWT_SECRET || 'cs_study_tutoring_finder_secure_jwt_secret_key_2026!';
+        const decoded = jwt.verify(token, jwtSecret);
+        req.user = decoded; // Contains { id, email, role }
+      }
+    }
+  } catch (error) {
+    // Public endpoint: invalid or expired token is ignored
+  }
+  next();
+};
+
+authMiddleware.optionalAuth = optionalAuth;
 module.exports = authMiddleware;

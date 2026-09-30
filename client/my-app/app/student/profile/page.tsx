@@ -19,13 +19,13 @@ export default function StudentProfilePage() {
 
   return (
     <ProtectedRoute allowedRole="student">
-      <div className="flex-1 py-10 sm:py-14 bg-slate-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex-1 py-10 sm:py-14 bg-[#e8edf2] text-[#0f172a]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           {/* Back Navigation */}
-          <div className="mb-6">
+          <div>
             <Link
               href="/student/dashboard"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-light-green hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#475569] hover:text-[#d88299] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Student Dashboard
@@ -33,88 +33,88 @@ export default function StudentProfilePage() {
           </div>
 
           {/* Profile Card */}
-          <div className="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
+          <div className="bg-[#f1f4f8] rounded-2xl shadow-xl border border-[#cbd5e1] overflow-hidden">
             {/* Header banner */}
-            <div className="bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 border-b border-slate-200 p-6 sm:p-8">
+            <div className="bg-[#dce3ec] border-b border-[#cbd5e1] p-6 sm:p-8">
               <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
-                <div className="w-20 h-20 rounded-full bg-purple text-white flex items-center justify-center font-bold text-2xl shadow-xs border-2 border-white">
+                <div className="w-20 h-20 rounded-2xl bg-[#fce7ec] text-[#d88299] border-2 border-[#9c4f65]/60 flex items-center justify-center font-extrabold text-2xl shadow-md">
                   {user?.name?.[0]?.toUpperCase()}{user?.surname?.[0]?.toUpperCase()}
                 </div>
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-slate-200 text-slate-800 text-xs font-semibold mb-2">
-                    <Shield className="w-3.5 h-3.5 text-purple" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#fce7ec] border border-[#9c4f65]/40 text-[#d88299] text-xs font-semibold mb-2">
+                    <Shield className="w-3.5 h-3.5" />
                     Verified Student Account
                   </div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
                     {user?.name} {user?.surname}
                   </h1>
-                  <p className="text-sm text-slate-600 mt-0.5">{user?.email}</p>
+                  <p className="text-sm text-[#475569] mt-0.5">{user?.email}</p>
                 </div>
               </div>
             </div>
 
             {/* Profile Information List */}
             <div className="p-6 sm:p-8 space-y-6">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 border-b border-slate-100 pb-2">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-[#334155] border-b border-[#cbd5e1] pb-2">
                 Account Credentials & Information
               </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
-                  <User className="w-5 h-5 text-purple shrink-0 mt-0.5" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                  <User className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-slate-500">First Name</span>
-                    <span className="text-sm font-semibold text-slate-900">{user?.name}</span>
+                    <span className="block text-xs font-medium text-[#475569]">First Name</span>
+                    <span className="text-sm font-semibold text-white">{user?.name}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
-                  <User className="w-5 h-5 text-purple shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                  <User className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-slate-500">Surname</span>
-                    <span className="text-sm font-semibold text-slate-900">{user?.surname}</span>
+                    <span className="block text-xs font-medium text-[#475569]">Surname</span>
+                    <span className="text-sm font-semibold text-white">{user?.surname}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
-                  <Mail className="w-5 h-5 text-light-green shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                  <Mail className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-slate-500">Email Address</span>
-                    <span className="text-sm font-semibold text-slate-900">{user?.email}</span>
+                    <span className="block text-xs font-medium text-[#475569]">Email Address</span>
+                    <span className="text-sm font-semibold text-white">{user?.email}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200">
-                  <Shield className="w-5 h-5 text-purple shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                  <Shield className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-slate-500">Assigned Role</span>
-                    <span className="text-sm font-semibold text-purple capitalize">{user?.role}</span>
+                    <span className="block text-xs font-medium text-[#475569]">Assigned Role</span>
+                    <span className="text-sm font-semibold text-[#d88299] capitalize">{user?.role}</span>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200 sm:col-span-2">
-                  <Calendar className="w-5 h-5 text-light-green shrink-0 mt-0.5" />
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1] sm:col-span-2">
+                  <Calendar className="w-5 h-5 text-[#d88299] shrink-0 mt-0.5" />
                   <div>
-                    <span className="block text-xs font-medium text-slate-500">Member Since</span>
-                    <span className="text-sm font-semibold text-slate-900">{formattedDate}</span>
+                    <span className="block text-xs font-medium text-[#475569]">Member Since</span>
+                    <span className="text-sm font-semibold text-white">{formattedDate}</span>
                   </div>
                 </div>
               </div>
 
               {/* Notice */}
-              <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 flex items-start gap-3 text-xs text-slate-600">
-                <CheckCircle2 className="w-4 h-4 text-light-green shrink-0 mt-0.5" />
+              <div className="bg-[#dce3ec] rounded-xl p-4 border border-[#cbd5e1] flex items-start gap-3 text-xs text-[#334155]">
+                <CheckCircle2 className="w-4 h-4 text-[#d88299] shrink-0 mt-0.5" />
                 <span>
-                  Basic profile data is retrieved directly from the verified database. Enrolled modules and study group preferences can be managed directly through your account.
+                  Basic profile data is retrieved directly from the verified database. Enrolled modules, study groups, and peer tutoring sessions can be tracked through your student portal.
                 </span>
               </div>
             </div>
 
             {/* Footer Action */}
-            <div className="bg-slate-50 px-6 sm:px-8 py-4 border-t border-slate-200 flex justify-end">
+            <div className="bg-[#dce3ec] px-6 sm:px-8 py-4 border-t border-[#cbd5e1] flex justify-end">
               <Link
                 href="/student/dashboard"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-purple hover:bg-purple-hover shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-[#d88299] hover:bg-[#c46982] hover:text-white shadow-xs transition-colors"
               >
                 <LayoutDashboard className="w-4 h-4" />
                 Return to Dashboard

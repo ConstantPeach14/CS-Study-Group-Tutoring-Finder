@@ -5,7 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:init": "node db/init_study_groups.js",
+    "test:phase1-2": "node test_runner.js",
+    "test:study-groups": "node test_study_groups.js",
+    "test:tutors": "node test_tutor_finder.js",
+    "test:all": "node test_runner.js && node test_study_groups.js && node test_tutor_finder.js",
+    "test": "node test_runner.js && node test_study_groups.js && node test_tutor_finder.js"
   },
   "keywords": [],
   "type": "commonjs",

@@ -7,6 +7,9 @@ process.env.JWT_SECRET = process.env.JWT_SECRET || 'cs_study_tutoring_finder_sec
 const { query } = require('./db/database');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const studyGroupRoutes = require('./routes/studyGroupRoutes');
+const tutorRoutes = require('./routes/tutorRoutes');
+const tutoringRequestRoutes = require('./routes/tutoringRequestRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -56,6 +59,9 @@ app.get('/api/health', async (req, res) => {
 // Mount application API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/study-groups', studyGroupRoutes);
+app.use('/api/tutors', tutorRoutes);
+app.use('/api/tutoring-requests', tutoringRequestRoutes);
 
 // Wildcard 404 handler for unmatched routes
 app.use((req, res) => {
