@@ -16,6 +16,12 @@ import {
   Mail,
   ArrowRight,
   Settings,
+  User,
+  Shield,
+  BookOpen,
+  MapPin,
+  Eye,
+  AlertCircle,
 } from 'lucide-react';
 
 interface TutoringRequest {
@@ -32,6 +38,37 @@ interface TutoringRequest {
   student_email: string;
 }
 
+interface TutorProfile {
+  tutor_id: number;
+  name: string;
+  surname: string;
+  email: string;
+  role: string;
+  profile_id: number | null;
+  bio: string | null;
+  subjects: string | null;
+  course_codes: string | null;
+  qualifications: string | null;
+  availability: string | null;
+}
+
+interface StudyGroup {
+  id: number;
+  title: string;
+  course_code: string;
+  description: string | null;
+  meeting_schedule: string;
+  location: string;
+  max_members: number;
+  created_by: number;
+  member_count: number;
+  is_full: boolean;
+  is_member: boolean;
+  is_creator: boolean;
+  creator_name: string;
+  creator_surname: string;
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 function formatDate(dateStr: string): string {
@@ -46,36 +83,73 @@ export default function TutorDashboardPage() {
   const { user, token } = useAuth();
 
   const [requests, setRequests] = useState<TutoringRequest[]>([]);
+  const [tutorProfile, setTutorProfile] = useState<TutorProfile | null>(null);
+  const [studyGroups, setStudyGroups] = useState<StudyGroup[]>([]);
   const [loadingRequests, setLoadingRequests] = useState<boolean>(true);
+  const [loadingProfile, setLoadingProfile] = useState<boolean>(true);
+  const [loadingGroups, setLoadingGroups] = useState<boolean>(true);
   const [actionInProgress, setActionInProgress] = useState<number | null>(null);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  /* Fetch incoming tutoring requests */
+  /* Fetch all dashboard data */
   useEffect(() => {
     let isMounted = true;
-    const fetchRequests = async () => {
+    const fetchDashboardData = async () => {
       if (!token) return;
       setLoadingRequests(true);
+      setLoadingProfile(true);
+      setLoadingGroups(true);
+      setErrorMessage(null);
       try {
-        const res = await fetch(`${API_BASE_URL}/api/tutoring-requests/received`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        // 1. Fetch incoming tutoring requests
+        const reqPromise = fetch(`${API_BASE_URL}/api/tutoring-requests/received`, {
+          headers: { Authorization: `Bearer ${token}` },
         });
+
+        // 2. Fetch tutor profile
+        const profilePromise = fetch(`${API_BASE_URL}/api/tutors/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // 3. Fetch study groups
+        const sgPromise = fetch(`${API_BASE_URL}/api/study-groups/user/my`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const [reqRes, profileRes, sgRes] = await Promise.all([reqPromise, profilePromise, sgPromise]);
         if (!isMounted) return;
 
-        if (res.ok) {
-          const data = await res.json();
-          setRequests(data.requests || []);
+        if (reqRes.ok) {
+          const reqData = await reqRes.json();
+          setRequests(reqData.requests || []);
+        } else if (reqRes.status === 401) {
+          setErrorMessage('Your session has expired. Please log in again.');
+        }
+
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          setTutorProfile(profileData.profile || null);
+        }
+
+        if (sgRes.ok) {
+          const sgData = await sgRes.json();
+          setStudyGroups(sgData.study_groups || []);
         }
       } catch {
-        // Soft fail
+        if (isMounted) {
+          setErrorMessage('Could not connect to the server. Please check your connection and try again.');
+        }
       } finally {
-        if (isMounted) setLoadingRequests(false);
+        if (isMounted) {
+          setLoadingRequests(false);
+          setLoadingProfile(false);
+          setLoadingGroups(false);
+        }
       }
     };
 
-    fetchRequests();
+    fetchDashboardData();
     return () => {
       isMounted = false;
     };
@@ -116,6 +190,14 @@ export default function TutorDashboardPage() {
 
   const pendingRequests = requests.filter((r) => r.status === 'pending');
   const acceptedSessions = requests.filter((r) => r.status === 'accepted');
+  const hasProfile = tutorProfile?.profile_id != null;
+  const formattedDate = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : 'Recently';
 
   return (
     <ProtectedRoute allowedRole="tutor">
@@ -145,13 +227,67 @@ export default function TutorDashboardPage() {
                 Manage Tutor Profile
               </Link>
               <Link
-                href="/tutors"
+                href="/study-groups"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-[#334155] bg-[#dce3ec] hover:bg-[#cbd5e1] border border-[#cbd5e1] transition-colors"
               >
                 <Users className="w-4 h-4" />
-                View Tutor Finder
+                Study Groups
               </Link>
             </div>
+          </div>
+
+          {/* Error Banner */}
+          {errorMessage && (
+            <div className="rounded-xl bg-[#fce7ec] border border-[#e89aae] p-4 text-sm text-[#9c4f65] flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Link
+              href="/tutor/profile"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <Settings className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Tutor Profile</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Manage your listing</p>
+            </Link>
+            <Link
+              href="/study-groups"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <Users className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Study Groups</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Browse &amp; create groups</p>
+            </Link>
+            <Link
+              href="/study-groups/create"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Create Group</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Start a study group</p>
+            </Link>
+            {user?.id && (
+              <Link
+                href={`/tutors/${user.id}`}
+                className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                  <Eye className="w-5 h-5" />
+                </div>
+                <span className="text-sm font-bold text-[#0f172a]">Public Profile</span>
+                <p className="text-[11px] text-[#64748b] mt-0.5">Preview your listing</p>
+              </Link>
+            )}
           </div>
 
           {/* Metric Cards */}
@@ -201,11 +337,238 @@ export default function TutorDashboardPage() {
                   <Award className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#9c4f65]">Active</div>
-              <p className="text-xs text-[#64748b] mt-2">Verified University Tutor</p>
-              <div className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#9c4f65] font-semibold">
-                Discoverable in Tutor Finder
+              <div className="text-2xl font-bold text-[#9c4f65]">{hasProfile ? 'Active' : 'Incomplete'}</div>
+              <p className="text-xs text-[#64748b] mt-2">
+                {hasProfile ? 'Discoverable in Tutor Finder' : 'Profile setup needed'}
+              </p>
+              <Link
+                href="/tutor/profile"
+                className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#9c4f65] font-semibold flex items-center gap-1 hover:underline"
+              >
+                {hasProfile ? 'Edit tutor profile' : 'Complete tutor profile'}
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Tutor Profile Summary */}
+          <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-[#cbd5e1] flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-[#9c4f65]" />
+                  Tutor Profile Summary
+                </h2>
+                <p className="text-xs text-[#475569] mt-0.5">
+                  Your public tutor listing information visible to students.
+                </p>
               </div>
+              <Link
+                href="/tutor/profile"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+              >
+                {hasProfile ? 'Edit Profile' : 'Create Profile'}
+              </Link>
+            </div>
+
+            <div className="p-6">
+              {loadingProfile ? (
+                <div className="py-12 flex justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#d88299]" />
+                </div>
+              ) : !hasProfile ? (
+                <div className="p-8 text-center bg-[#e8edf2] rounded-xl border border-dashed border-[#cbd5e1] space-y-2">
+                  <GraduationCap className="w-8 h-8 text-[#94a3b8] mx-auto" />
+                  <p className="text-sm font-semibold text-[#0f172a]">You haven&apos;t created your tutor profile yet</p>
+                  <p className="text-xs text-[#475569] max-w-sm mx-auto">
+                    Set up your tutor profile with your subjects, course codes, and availability so students can find and request you.
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href="/tutor/profile"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                    >
+                      Create your tutor profile now
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {/* Account info row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="flex items-center gap-2 p-3 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                      <User className="w-4 h-4 text-[#9c4f65]" />
+                      <div>
+                        <span className="text-[11px] text-[#64748b] block">Full Name</span>
+                        <span className="text-sm font-semibold text-[#0f172a]">{user?.name} {user?.surname}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 p-3 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                      <Mail className="w-4 h-4 text-[#9c4f65]" />
+                      <div>
+                        <span className="text-[11px] text-[#64748b] block">Email</span>
+                        <span className="text-sm font-semibold text-[#0f172a]">{user?.email}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 p-3 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                      <Calendar className="w-4 h-4 text-[#9c4f65]" />
+                      <div>
+                        <span className="text-[11px] text-[#64748b] block">Member Since</span>
+                        <span className="text-sm font-semibold text-[#0f172a]">{formattedDate}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Profile details */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {tutorProfile.subjects && (
+                      <div className="p-4 rounded-xl bg-[#fce7ec] border border-[#e89aae]">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#9c4f65] block mb-1">Subjects</span>
+                        <p className="text-sm font-medium text-[#0f172a]">{tutorProfile.subjects}</p>
+                      </div>
+                    )}
+                    {tutorProfile.course_codes && (
+                      <div className="p-4 rounded-xl bg-[#fce7ec] border border-[#e89aae]">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#9c4f65] block mb-1">Course Codes</span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {tutorProfile.course_codes.split(',').map((code, i) => (
+                            <span key={i} className="px-2 py-0.5 rounded-md text-xs font-bold bg-[#f1f4f8] text-[#9c4f65] border border-[#e89aae]">
+                              {code.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {tutorProfile.availability && (
+                      <div className="p-4 rounded-xl bg-[#fce7ec] border border-[#e89aae]">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#9c4f65] block mb-1">Availability</span>
+                        <p className="text-sm font-medium text-[#0f172a]">{tutorProfile.availability}</p>
+                      </div>
+                    )}
+                    {tutorProfile.qualifications && (
+                      <div className="p-4 rounded-xl bg-[#fce7ec] border border-[#e89aae]">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#9c4f65] block mb-1">Qualifications</span>
+                        <p className="text-sm font-medium text-[#0f172a]">{tutorProfile.qualifications}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {tutorProfile.bio && (
+                    <div className="p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1]">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#64748b] block mb-1">Bio</span>
+                      <p className="text-sm text-[#334155]">{tutorProfile.bio}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* My Study Groups Section */}
+          <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-[#cbd5e1] flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-[#9c4f65]" />
+                  My Study Groups
+                </h2>
+                <p className="text-xs text-[#475569] mt-0.5">
+                  Groups you&apos;ve created or joined for collaborative learning.
+                </p>
+              </div>
+              <Link
+                href="/study-groups/create"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+              >
+                + Create Group
+              </Link>
+            </div>
+
+            <div className="p-6">
+              {loadingGroups ? (
+                <div className="py-12 flex justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#d88299]" />
+                </div>
+              ) : studyGroups.length === 0 ? (
+                <div className="p-8 text-center bg-[#e8edf2] rounded-xl border border-dashed border-[#cbd5e1] space-y-2">
+                  <Users className="w-8 h-8 text-[#94a3b8] mx-auto" />
+                  <p className="text-sm font-semibold text-[#0f172a]">You haven&apos;t joined any study groups yet</p>
+                  <p className="text-xs text-[#475569] max-w-sm mx-auto">
+                    Browse available study groups or create your own for collaborative learning.
+                  </p>
+                  <div className="pt-2 flex justify-center gap-3">
+                    <Link
+                      href="/study-groups"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                    >
+                      Browse study groups
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <Link
+                      href="/study-groups/create"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                    >
+                      Create a group
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {studyGroups.slice(0, 4).map((group) => (
+                    <Link
+                      key={group.id}
+                      href={`/study-groups/${group.id}`}
+                      className="block p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1] hover:border-[#d88299] hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae]">
+                          {group.course_code}
+                        </span>
+                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                          group.is_full
+                            ? 'bg-[#dce3ec] text-[#64748b] border border-[#cbd5e1]'
+                            : 'bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae]'
+                        }`}>
+                          {group.is_full ? 'Full' : 'Open'}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-sm text-[#0f172a] mb-1.5 line-clamp-1">{group.title}</h3>
+                      <div className="space-y-1 text-[11px] text-[#475569]">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="w-3 h-3 text-[#9c4f65]" />
+                          <span className="line-clamp-1">{group.meeting_schedule}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="w-3 h-3 text-[#9c4f65]" />
+                          <span className="line-clamp-1">{group.location}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Users className="w-3 h-3 text-[#9c4f65]" />
+                          <span>{group.member_count} / {group.max_members} members</span>
+                        </div>
+                      </div>
+                      {group.is_creator && (
+                        <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] px-2 py-0.5 rounded-full">
+                          <Shield className="w-2.5 h-2.5" /> Creator
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {studyGroups.length > 4 && (
+                <div className="mt-4 text-center">
+                  <Link
+                    href="/study-groups"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                  >
+                    View all {studyGroups.length} study groups
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 

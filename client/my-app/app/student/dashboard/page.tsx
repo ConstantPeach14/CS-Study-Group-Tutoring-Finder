@@ -13,6 +13,12 @@ import {
   CheckCircle2,
   Loader2,
   Mail,
+  User,
+  Shield,
+  Calendar,
+  MapPin,
+  Search,
+  AlertCircle,
 } from 'lucide-react';
 
 interface StudentTutoringRequest {
@@ -29,6 +35,23 @@ interface StudentTutoringRequest {
   tutor_email: string;
 }
 
+interface StudyGroup {
+  id: number;
+  title: string;
+  course_code: string;
+  description: string | null;
+  meeting_schedule: string;
+  location: string;
+  max_members: number;
+  created_by: number;
+  member_count: number;
+  is_full: boolean;
+  is_member: boolean;
+  is_creator: boolean;
+  creator_name: string;
+  creator_surname: string;
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 function formatDate(dateStr: string): string {
@@ -43,16 +66,20 @@ export default function StudentDashboardPage() {
   const { user, token } = useAuth();
 
   const [requests, setRequests] = useState<StudentTutoringRequest[]>([]);
+  const [studyGroups, setStudyGroups] = useState<StudyGroup[]>([]);
   const [loadingRequests, setLoadingRequests] = useState<boolean>(true);
-  const [studyGroupsCount, setStudyGroupsCount] = useState<number>(0);
+  const [loadingGroups, setLoadingGroups] = useState<boolean>(true);
   const [cancellingId, setCancellingId] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  /* Fetch user study groups and tutoring requests */
+  /* Fetch dashboard data */
   useEffect(() => {
     let isMounted = true;
     const fetchDashboardData = async () => {
       if (!token) return;
       setLoadingRequests(true);
+      setLoadingGroups(true);
+      setErrorMessage(null);
       try {
         // 1. Fetch student's tutoring requests
         const reqPromise = fetch(`${API_BASE_URL}/api/tutoring-requests/my`, {
@@ -70,16 +97,23 @@ export default function StudentDashboardPage() {
         if (reqRes.ok) {
           const reqData = await reqRes.json();
           setRequests(reqData.requests || []);
+        } else if (reqRes.status === 401) {
+          setErrorMessage('Your session has expired. Please log in again.');
         }
 
         if (sgRes.ok) {
           const sgData = await sgRes.json();
-          setStudyGroupsCount(sgData.count || (sgData.study_groups ? sgData.study_groups.length : 0));
+          setStudyGroups(sgData.study_groups || []);
         }
       } catch {
-        // Soft fail
+        if (isMounted) {
+          setErrorMessage('Could not connect to the server. Please check your connection and try again.');
+        }
       } finally {
-        if (isMounted) setLoadingRequests(false);
+        if (isMounted) {
+          setLoadingRequests(false);
+          setLoadingGroups(false);
+        }
       }
     };
 
@@ -116,6 +150,13 @@ export default function StudentDashboardPage() {
 
   const pendingCount = requests.filter((r) => r.status === 'pending').length;
   const acceptedCount = requests.filter((r) => r.status === 'accepted').length;
+  const formattedDate = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : 'Recently';
 
   return (
     <ProtectedRoute allowedRole="student">
@@ -154,7 +195,59 @@ export default function StudentDashboardPage() {
             </div>
           </div>
 
-          {/* Dashboard Metric Cards */}
+          {/* Error Banner */}
+          {errorMessage && (
+            <div className="rounded-xl bg-[#fce7ec] border border-[#e89aae] p-4 text-sm text-[#9c4f65] flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Link
+              href="/tutors"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Find a Tutor</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Browse verified tutors</p>
+            </Link>
+            <Link
+              href="/study-groups"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <Search className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Browse Groups</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Join study sessions</p>
+            </Link>
+            <Link
+              href="/study-groups/create"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <Users className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Create Group</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Start a new study group</p>
+            </Link>
+            <Link
+              href="/student/profile"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <User className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">My Profile</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">View account details</p>
+            </Link>
+          </div>
+
+          {/* Dashboard Metric Cards + Profile Summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* My Study Groups */}
             <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
@@ -166,7 +259,7 @@ export default function StudentDashboardPage() {
                   <Users className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-3xl font-extrabold text-[#0f172a]">{studyGroupsCount}</div>
+              <div className="text-3xl font-extrabold text-[#0f172a]">{studyGroups.length}</div>
               <p className="text-xs text-[#64748b] mt-2">Active module study groups</p>
               <Link
                 href="/study-groups"
@@ -177,7 +270,7 @@ export default function StudentDashboardPage() {
               </Link>
             </div>
 
-            {/* Tutoring Sessions */}
+            {/* Tutoring Requests */}
             <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#64748b]">
@@ -200,25 +293,149 @@ export default function StudentDashboardPage() {
               </Link>
             </div>
 
-            {/* Account Status */}
+            {/* Profile Summary */}
             <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#64748b]">
-                  Account Standing
+                  Account Profile
                 </span>
                 <div className="w-8 h-8 rounded-lg bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center">
-                  <BookOpen className="w-4 h-4" />
+                  <Shield className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-2xl font-bold text-[#9c4f65]">Active Student</div>
-              <p className="text-xs text-[#64748b] mt-2">Verified University Member</p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <User className="w-3.5 h-3.5 text-[#9c4f65]" />
+                  <span className="font-semibold text-[#0f172a]">{user?.name} {user?.surname}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-[#475569]">
+                  <Mail className="w-3.5 h-3.5 text-[#9c4f65]" />
+                  <span>{user?.email}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-[#475569]">
+                  <Calendar className="w-3.5 h-3.5 text-[#9c4f65]" />
+                  <span>Member since {formattedDate}</span>
+                </div>
+                <div className="pt-1">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] text-[11px] font-bold capitalize">
+                    <Shield className="w-3 h-3" /> {user?.role}
+                  </span>
+                </div>
+              </div>
               <Link
                 href="/student/profile"
                 className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#334155] font-semibold flex items-center gap-1 hover:underline"
               >
-                Manage student profile
+                View full profile
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
+            </div>
+          </div>
+
+          {/* My Study Groups Section */}
+          <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-[#cbd5e1] flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-[#9c4f65]" />
+                  My Study Groups
+                </h2>
+                <p className="text-xs text-[#475569] mt-0.5">
+                  Groups you&apos;ve created or joined for collaborative learning.
+                </p>
+              </div>
+              <Link
+                href="/study-groups/create"
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-white bg-[#d88299] hover:bg-[#c46982] transition-colors"
+              >
+                + Create Group
+              </Link>
+            </div>
+
+            <div className="p-6">
+              {loadingGroups ? (
+                <div className="py-12 flex justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#d88299]" />
+                </div>
+              ) : studyGroups.length === 0 ? (
+                <div className="p-8 text-center bg-[#e8edf2] rounded-xl border border-dashed border-[#cbd5e1] space-y-2">
+                  <Users className="w-8 h-8 text-[#94a3b8] mx-auto" />
+                  <p className="text-sm font-semibold text-[#0f172a]">You haven&apos;t joined any study groups yet</p>
+                  <p className="text-xs text-[#475569] max-w-sm mx-auto">
+                    Browse available study groups to find classmates in your modules, or create your own group.
+                  </p>
+                  <div className="pt-2 flex justify-center gap-3">
+                    <Link
+                      href="/study-groups"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                    >
+                      Browse study groups
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <Link
+                      href="/study-groups/create"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                    >
+                      Create a group
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {studyGroups.slice(0, 4).map((group) => (
+                    <Link
+                      key={group.id}
+                      href={`/study-groups/${group.id}`}
+                      className="block p-4 rounded-xl bg-[#e8edf2] border border-[#cbd5e1] hover:border-[#d88299] hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <span className="px-2.5 py-0.5 rounded-md text-xs font-bold bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae]">
+                          {group.course_code}
+                        </span>
+                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                          group.is_full
+                            ? 'bg-[#dce3ec] text-[#64748b] border border-[#cbd5e1]'
+                            : 'bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae]'
+                        }`}>
+                          {group.is_full ? 'Full' : 'Open'}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-sm text-[#0f172a] mb-1.5 line-clamp-1">{group.title}</h3>
+                      <div className="space-y-1 text-[11px] text-[#475569]">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="w-3 h-3 text-[#9c4f65]" />
+                          <span className="line-clamp-1">{group.meeting_schedule}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <MapPin className="w-3 h-3 text-[#9c4f65]" />
+                          <span className="line-clamp-1">{group.location}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Users className="w-3 h-3 text-[#9c4f65]" />
+                          <span>{group.member_count} / {group.max_members} members</span>
+                        </div>
+                      </div>
+                      {group.is_creator && (
+                        <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] px-2 py-0.5 rounded-full">
+                          <Shield className="w-2.5 h-2.5" /> Creator
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {studyGroups.length > 4 && (
+                <div className="mt-4 text-center">
+                  <Link
+                    href="/study-groups"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#9c4f65] hover:underline"
+                  >
+                    View all {studyGroups.length} study groups
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 
