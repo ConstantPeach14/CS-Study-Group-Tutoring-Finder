@@ -1,7 +1,7 @@
 # Implementation Prompt: Remove Automated Tutors & Courses + Visible Pink Forms & Profile Details
 
 ## Objective
-1. **Clean Database Records**: Remove all automated test tutors and test accounts from Neon PostgreSQL while strictly preserving user **Jungkook Jeon** (`kookie@gmail.com`) and their created study group ("Science" / DTS97).
+1. **Clean Database Records**: Remove all automated test tutors and test accounts from Neon PostgreSQL while strictly preserving user **Jungkook Jeon** (`kookie@gmail.com`) and **Taehyung Kim** (`tae@gmail.com`).
 2. **Form Visibility Fix (Pink Forms)**: Update all input fields, textareas, and select dropdowns across the application—specifically in the Study Group Creation form (`/study-groups/create`) and all other forms—to have visible soft-pink backgrounds (`bg-[#fce7ec]`), crisp dusty pink borders (`border-[#d88299]`), high-contrast dark text (`text-[#0f172a]`), and clear placeholders (`placeholder-[#9c4f65]/60`).
 3. **Profile Details & General Contrast Fix**: Fix washed-out / invisible details in student and tutor profiles (such as `/student/profile`, `/tutor/profile`, and `/tutors/[id]`), eliminating all instances where `text-white` was rendered on light backgrounds and enhancing them with clear, legible text and pink badge accents.
 
@@ -11,16 +11,16 @@
 
 Execute a targeted SQL cleanup script against the Neon database:
 - **Preserved Records**:
-  - User: `jungkook jeon` (`email = 'kookie@gmail.com'`, `id = 68`).
-  - Study Group: `Science` (`id = 8`, `course_code = 'DTS97'`, `created_by = 68`).
-  - Associated memberships for Jungkook Jeon.
+  - Users: `jungkook jeon` (`email = 'kookie@gmail.com'`) and `taehyung kim` (`email = 'tae@gmail.com'`).
+  - Associated study groups created by these users.
+  - Associated memberships for these users.
 - **Removed Records**:
-  - All test/automated `tutor_profiles` (e.g. Grace Hopper, Alan Turing generated during test runs).
+  - All test/automated `tutor_profiles` (except those belonging to preserved users).
   - All automated `tutoring_requests` linked to test users.
-  - All automated/test users in `users` table (`WHERE email != 'kookie@gmail.com'`).
+  - All automated/test users in `users` table (excluding preserved users).
 - **Safety**:
   - Run with foreign key cascades or child-to-parent deletion order (`tutoring_requests` -> `tutor_profiles` -> `study_group_members` -> `study_groups` -> `users`).
-  - Verify that exactly 1 user (Jungkook Jeon) and 1 study group (Science) remain in the database.
+  - Verify that only manually registered users remain in the database.
 
 ---
 

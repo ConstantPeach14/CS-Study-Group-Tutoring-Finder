@@ -2,6 +2,13 @@ const http = require('http');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
+// Guard: only run against test environment to avoid polluting production database
+if (process.env.NODE_ENV !== 'test') {
+  console.error('ERROR: test_study_groups.js must only be run with NODE_ENV=test.');
+  console.error('This script registers real user accounts. Do not run against production.');
+  process.exit(1);
+}
+
 const app = require('./server.js');
 const { query } = require('./db/database');
 

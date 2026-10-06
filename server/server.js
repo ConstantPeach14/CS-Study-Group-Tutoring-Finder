@@ -60,7 +60,6 @@ app.get('/api/health', async (req, res) => {
 // Mount application API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/modules', moduleRoutes);
 app.use('/api/study-groups', studyGroupRoutes);
 app.use('/api/tutors', tutorRoutes);
 app.use('/api/tutoring-requests', tutoringRequestRoutes);

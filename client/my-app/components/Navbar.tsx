@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -13,9 +13,6 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
-    if (path === '/modules') {
-      return pathname.startsWith('/modules');
-    }
     if (path === '/study-groups') {
       return pathname.startsWith('/study-groups');
     }
@@ -62,16 +59,6 @@ export default function Navbar() {
                   }`}
                 >
                   Home
-                </Link>
-                <Link
-                  href="/modules"
-                  className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    isActive('/modules')
-                      ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
-                      : 'text-[#334155] hover:text-[#9c4f65] hover:bg-[#dce3ec]'
-                  }`}
-                >
-                  Modules
                 </Link>
                 <Link
                   href="/study-groups"
@@ -133,17 +120,6 @@ export default function Navbar() {
                 >
                   <LayoutDashboard className="w-4 h-4" />
                   Dashboard
-                </Link>
-                <Link
-                  href="/modules"
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    isActive('/modules')
-                      ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
-                      : 'text-[#334155] hover:text-[#9c4f65] hover:bg-[#dce3ec]'
-                  }`}
-                >
-                  <Library className="w-4 h-4" />
-                  Modules
                 </Link>
                 <Link
                   href="/study-groups"
@@ -225,17 +201,6 @@ export default function Navbar() {
                 Home
               </Link>
               <Link
-                href="/modules"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-xl text-base font-medium ${
-                  isActive('/modules')
-                    ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
-                    : 'text-[#334155] hover:bg-[#dce3ec]'
-                }`}
-              >
-                Modules
-              </Link>
-              <Link
                 href="/study-groups"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-3 py-2 rounded-xl text-base font-medium ${
@@ -304,18 +269,6 @@ export default function Navbar() {
               >
                 <LayoutDashboard className="w-5 h-5" />
                 Dashboard
-              </Link>
-              <Link
-                href="/modules"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-base font-medium ${
-                  isActive('/modules')
-                    ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
-                    : 'text-[#334155] hover:bg-[#dce3ec]'
-                }`}
-              >
-                <Library className="w-5 h-5" />
-                Modules
               </Link>
               <Link
                 href="/study-groups"
