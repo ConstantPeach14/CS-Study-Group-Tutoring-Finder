@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { useAuth } from '../context/AuthContext';
-import { Menu, X, BookOpen, User as UserIcon, LogOut, LayoutDashboard, Users, GraduationCap } from 'lucide-react';
+import { Menu, X, BookOpen, User as UserIcon, LogOut, LayoutDashboard, Users, GraduationCap, Library } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -12,6 +13,9 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (path: string) => {
+    if (path === '/modules') {
+      return pathname.startsWith('/modules');
+    }
     if (path === '/study-groups') {
       return pathname.startsWith('/study-groups');
     }
@@ -20,6 +24,7 @@ export default function Navbar() {
     }
     return pathname === path;
   };
+
 
   // Determine role-specific dashboard and profile paths
   const dashboardPath = user?.role === 'tutor' ? '/tutor/dashboard' : '/student/dashboard';
@@ -57,6 +62,16 @@ export default function Navbar() {
                   }`}
                 >
                   Home
+                </Link>
+                <Link
+                  href="/modules"
+                  className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    isActive('/modules')
+                      ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
+                      : 'text-[#334155] hover:text-[#9c4f65] hover:bg-[#dce3ec]'
+                  }`}
+                >
+                  Modules
                 </Link>
                 <Link
                   href="/study-groups"
@@ -120,6 +135,17 @@ export default function Navbar() {
                   Dashboard
                 </Link>
                 <Link
+                  href="/modules"
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    isActive('/modules')
+                      ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
+                      : 'text-[#334155] hover:text-[#9c4f65] hover:bg-[#dce3ec]'
+                  }`}
+                >
+                  <Library className="w-4 h-4" />
+                  Modules
+                </Link>
+                <Link
                   href="/study-groups"
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                     isActive('/study-groups')
@@ -130,6 +156,7 @@ export default function Navbar() {
                   <Users className="w-4 h-4" />
                   Study Groups
                 </Link>
+
                 <Link
                   href="/tutors"
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
@@ -196,6 +223,17 @@ export default function Navbar() {
                 }`}
               >
                 Home
+              </Link>
+              <Link
+                href="/modules"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-xl text-base font-medium ${
+                  isActive('/modules')
+                    ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
+                    : 'text-[#334155] hover:bg-[#dce3ec]'
+                }`}
+              >
+                Modules
               </Link>
               <Link
                 href="/study-groups"
@@ -268,6 +306,18 @@ export default function Navbar() {
                 Dashboard
               </Link>
               <Link
+                href="/modules"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-base font-medium ${
+                  isActive('/modules')
+                    ? 'text-[#9c4f65] bg-[#fce7ec] border border-[#e89aae] font-bold'
+                    : 'text-[#334155] hover:bg-[#dce3ec]'
+                }`}
+              >
+                <Library className="w-5 h-5" />
+                Modules
+              </Link>
+              <Link
                 href="/study-groups"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-xl text-base font-medium ${
@@ -279,6 +329,7 @@ export default function Navbar() {
                 <Users className="w-5 h-5" />
                 Study Groups
               </Link>
+
               <Link
                 href="/tutors"
                 onClick={() => setMobileMenuOpen(false)}

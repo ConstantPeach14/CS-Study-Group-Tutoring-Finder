@@ -19,6 +19,7 @@ import {
   MapPin,
   Search,
   AlertCircle,
+  Library,
 } from 'lucide-react';
 
 interface StudentTutoringRequest {
@@ -52,6 +53,17 @@ interface StudyGroup {
   creator_surname: string;
 }
 
+interface EnrolledModule {
+  id: number;
+  code: string;
+  name: string;
+  faculty: string;
+  description: string | null;
+  enrollment_role: string;
+  enrolled_at: string;
+  active_group_count: number;
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 function formatDate(dateStr: string): string {
@@ -67,9 +79,12 @@ export default function StudentDashboardPage() {
 
   const [requests, setRequests] = useState<StudentTutoringRequest[]>([]);
   const [studyGroups, setStudyGroups] = useState<StudyGroup[]>([]);
+  const [enrolledModules, setEnrolledModules] = useState<EnrolledModule[]>([]);
   const [loadingRequests, setLoadingRequests] = useState<boolean>(true);
   const [loadingGroups, setLoadingGroups] = useState<boolean>(true);
+  const [loadingModules, setLoadingModules] = useState<boolean>(true);
   const [cancellingId, setCancellingId] = useState<number | null>(null);
+  const [unenrollLoadingId, setUnenrollLoadingId] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   /* Fetch dashboard data */
@@ -79,6 +94,7 @@ export default function StudentDashboardPage() {
       if (!token) return;
       setLoadingRequests(true);
       setLoadingGroups(true);
+      setLoadingModules(true);
       setErrorMessage(null);
       try {
         // 1. Fetch student's tutoring requests
@@ -91,7 +107,12 @@ export default function StudentDashboardPage() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const [reqRes, sgRes] = await Promise.all([reqPromise, sgPromise]);
+        // 3. Fetch student's enrolled modules
+        const modPromise = fetch(`${API_BASE_URL}/api/users/me/modules`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const [reqRes, sgRes, modRes] = await Promise.all([reqPromise, sgPromise, modPromise]);
         if (!isMounted) return;
 
         if (reqRes.ok) {
@@ -105,6 +126,11 @@ export default function StudentDashboardPage() {
           const sgData = await sgRes.json();
           setStudyGroups(sgData.study_groups || []);
         }
+
+        if (modRes.ok) {
+          const modData = await modRes.json();
+          setEnrolledModules(modData.modules || []);
+        }
       } catch {
         if (isMounted) {
           setErrorMessage('Could not connect to the server. Please check your connection and try again.');
@@ -113,6 +139,7 @@ export default function StudentDashboardPage() {
         if (isMounted) {
           setLoadingRequests(false);
           setLoadingGroups(false);
+          setLoadingModules(false);
         }
       }
     };
@@ -122,6 +149,30 @@ export default function StudentDashboardPage() {
       isMounted = false;
     };
   }, [token]);
+
+  /* Unenroll from a module */
+  const handleUnenrollModule = async (moduleId: number) => {
+    if (!token) return;
+    setUnenrollLoadingId(moduleId);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/modules/unenroll`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ module_id: moduleId }),
+      });
+      if (res.ok) {
+        setEnrolledModules((prev) => prev.filter((m) => m.id !== moduleId));
+      }
+    } catch {
+      // Soft fail
+    } finally {
+      setUnenrollLoadingId(null);
+    }
+  };
+
 
   /* Cancel a pending request */
   const handleCancelRequest = async (requestId: number) => {
@@ -206,6 +257,16 @@ export default function StudentDashboardPage() {
           {/* Quick Actions */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Link
+              href="/modules"
+              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
+                <Library className="w-5 h-5" />
+              </div>
+              <span className="text-sm font-bold text-[#0f172a]">Course Directory</span>
+              <p className="text-[11px] text-[#64748b] mt-0.5">Explore & enroll courses</p>
+            </Link>
+            <Link
               href="/tutors"
               className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
             >
@@ -235,32 +296,43 @@ export default function StudentDashboardPage() {
               <span className="text-sm font-bold text-[#0f172a]">Create Group</span>
               <p className="text-[11px] text-[#64748b] mt-0.5">Start a new study group</p>
             </Link>
-            <Link
-              href="/student/profile"
-              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
-                <User className="w-5 h-5" />
-              </div>
-              <span className="text-sm font-bold text-[#0f172a]">My Profile</span>
-              <p className="text-[11px] text-[#64748b] mt-0.5">View account details</p>
-            </Link>
           </div>
 
           {/* Dashboard Metric Cards + Profile Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Enrolled Courses */}
+            <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#64748b]">
+                  My Courses
+                </span>
+                <div className="w-8 h-8 rounded-lg bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center">
+                  <Library className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-3xl font-extrabold text-[#0f172a]">{enrolledModules.length}</div>
+              <p className="text-xs text-[#64748b] mt-2">Enrolled course modules</p>
+              <Link
+                href="/modules"
+                className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#9c4f65] font-semibold flex items-center gap-1 hover:underline"
+              >
+                Browse course directory
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
             {/* My Study Groups */}
             <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#64748b]">
-                  My Study Groups
+                  Study Groups
                 </span>
                 <div className="w-8 h-8 rounded-lg bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center">
                   <Users className="w-4 h-4" />
                 </div>
               </div>
               <div className="text-3xl font-extrabold text-[#0f172a]">{studyGroups.length}</div>
-              <p className="text-xs text-[#64748b] mt-2">Active module study groups</p>
+              <p className="text-xs text-[#64748b] mt-2">Active joined & created groups</p>
               <Link
                 href="/study-groups"
                 className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#9c4f65] font-semibold flex items-center gap-1 hover:underline"
@@ -303,36 +375,125 @@ export default function StudentDashboardPage() {
                   <Shield className="w-4 h-4" />
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <User className="w-3.5 h-3.5 text-[#9c4f65]" />
-                  <span className="font-semibold text-[#0f172a]">{user?.name} {user?.surname}</span>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2 text-xs truncate">
+                  <User className="w-3 h-3 text-[#9c4f65] shrink-0" />
+                  <span className="font-semibold text-[#0f172a] truncate">{user?.name} {user?.surname}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-[#475569]">
-                  <Mail className="w-3.5 h-3.5 text-[#9c4f65]" />
-                  <span>{user?.email}</span>
+                <div className="flex items-center gap-2 text-[11px] text-[#475569] truncate">
+                  <Mail className="w-3 h-3 text-[#9c4f65] shrink-0" />
+                  <span className="truncate">{user?.email}</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-[#475569]">
-                  <Calendar className="w-3.5 h-3.5 text-[#9c4f65]" />
-                  <span>Member since {formattedDate}</span>
+                <div className="flex items-center gap-2 text-[11px] text-[#475569] truncate">
+                  <Calendar className="w-3 h-3 text-[#9c4f65] shrink-0" />
+                  <span className="truncate">Joined {formattedDate}</span>
                 </div>
                 <div className="pt-1">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] text-[11px] font-bold capitalize">
-                    <Shield className="w-3 h-3" /> {user?.role}
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] text-[10px] font-bold capitalize">
+                    <Shield className="w-2.5 h-2.5" /> {user?.role}
                   </span>
                 </div>
+
               </div>
               <Link
                 href="/student/profile"
-                className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#334155] font-semibold flex items-center gap-1 hover:underline"
+                className="mt-3 pt-3 border-t border-[#cbd5e1] text-xs text-[#334155] font-semibold flex items-center gap-1 hover:underline"
               >
-                View full profile
+                View profile
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
+          {/* My Enrolled Courses & Modules Section */}
+          <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-[#cbd5e1] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
+                  <Library className="w-5 h-5 text-[#9c4f65]" />
+                  My Enrolled Courses & Modules
+                </h2>
+                <p className="text-xs text-[#475569] mt-0.5">
+                  Your active university modules. Connect with classmates and discover module-specific study groups.
+                </p>
+              </div>
+              <Link
+                href="/modules"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#1e293b] bg-[#d88299] hover:bg-[#c46982] transition-colors self-start sm:self-auto"
+              >
+                + Browse Directory
+              </Link>
+            </div>
+
+            <div className="p-6">
+              {loadingModules ? (
+                <div className="py-12 flex justify-center">
+                  <Loader2 className="w-8 h-8 animate-spin text-[#d88299]" />
+                </div>
+              ) : enrolledModules.length === 0 ? (
+                <div className="p-8 text-center bg-[#e8edf2] rounded-xl border border-dashed border-[#cbd5e1] space-y-2">
+                  <Library className="w-8 h-8 text-[#94a3b8] mx-auto" />
+                  <p className="text-sm font-semibold text-[#0f172a]">You haven&apos;t enrolled in any courses yet</p>
+                  <p className="text-xs text-[#475569] max-w-sm mx-auto">
+                    Enroll in your courses to easily find study partners in your exact lecture sections.
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href="/modules"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#1e293b] bg-[#d88299] hover:bg-[#c46982] transition-colors"
+                    >
+                      Browse Course Directory
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {enrolledModules.map((mod) => (
+                    <div
+                      key={mod.id}
+                      className="bg-[#e8edf2] rounded-xl p-4 border border-[#cbd5e1] hover:border-[#d88299] transition-all flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <span className="px-2.5 py-0.5 rounded-lg bg-[#fce7ec] border border-[#e89aae] text-xs font-bold text-[#9c4f65]">
+                            {mod.code}
+                          </span>
+                          <span className="text-[10px] text-[#64748b] font-semibold truncate max-w-[130px]">
+                            {mod.faculty}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-[#0f172a] mb-1 line-clamp-1">{mod.name}</h4>
+                        <div className="flex items-center gap-1.5 text-xs text-[#475569] mt-2">
+                          <BookOpen className="w-3.5 h-3.5 text-[#9c4f65]" />
+                          <span>{mod.active_group_count} study groups active</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-[#cbd5e1] flex items-center justify-between gap-2">
+                        <Link
+                          href={`/modules/${mod.id}`}
+                          className="text-xs font-bold text-[#9c4f65] hover:underline"
+                        >
+                          View Course
+                        </Link>
+                        <button
+                          onClick={() => handleUnenrollModule(mod.id)}
+                          disabled={unenrollLoadingId === mod.id}
+                          className="text-xs font-medium text-[#64748b] hover:text-red-700 transition-colors cursor-pointer"
+                        >
+                          {unenrollLoadingId === mod.id ? 'Leaving...' : 'Unenroll'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* My Study Groups Section */}
+
           <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
             <div className="p-6 border-b border-[#cbd5e1] flex items-center justify-between">
               <div>

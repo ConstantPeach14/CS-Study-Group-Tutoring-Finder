@@ -10,6 +10,7 @@ const userRoutes = require('./routes/userRoutes');
 const studyGroupRoutes = require('./routes/studyGroupRoutes');
 const tutorRoutes = require('./routes/tutorRoutes');
 const tutoringRequestRoutes = require('./routes/tutoringRequestRoutes');
+const moduleRoutes = require('./routes/moduleRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -59,9 +60,11 @@ app.get('/api/health', async (req, res) => {
 // Mount application API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/modules', moduleRoutes);
 app.use('/api/study-groups', studyGroupRoutes);
 app.use('/api/tutors', tutorRoutes);
 app.use('/api/tutoring-requests', tutoringRequestRoutes);
+
 
 // Wildcard 404 handler for unmatched routes
 app.use((req, res) => {
