@@ -105,7 +105,7 @@ export default function StudentProfilePage() {
               <div className="bg-[#dce3ec] rounded-xl p-4 border border-[#cbd5e1] flex items-start gap-3 text-xs text-[#334155]">
                 <CheckCircle2 className="w-4 h-4 text-[#d88299] shrink-0 mt-0.5" />
                 <span>
-                  Basic profile data is retrieved directly from the verified database. Enrolled modules, study groups, and peer tutoring sessions can be tracked through your student portal.
+                  Basic profile data is retrieved directly from the verified database. Study groups and peer tutoring sessions can be tracked through your student portal.
                 </span>
               </div>
             </div>

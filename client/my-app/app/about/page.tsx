@@ -15,8 +15,8 @@ export default function AboutPage() {
             Empowering University Students Through Collaborative Learning
           </h1>
           <p className="mt-4 text-base text-[#475569] leading-relaxed">
-            The Study Group &amp; Tutoring Finder addresses a common university challenge: in large lecture halls
-            and introductory modules, finding peers to review material with or finding dependable tutoring help can be daunting.
+            The Study Group &amp; Tutoring Finder addresses a common university challenge: finding
+            classmates to review material with and dependable peer tutoring can be daunting.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export default function AboutPage() {
               </h2>
               <p className="text-sm text-[#334155] leading-relaxed mb-4">
                 Every student deserves an academic support network. We provide a centralized, secure platform
-                where students can easily discover peers in identical modules and schedule productive study sessions.
+                where students can find classmates and schedule productive study sessions.
               </p>
               <p className="text-sm text-[#475569] leading-relaxed">
                 Simultaneously, we empower capable student tutors to mentor their peers, reinforcing their own mastery
@@ -46,7 +46,7 @@ export default function AboutPage() {
               <div className="flex items-start gap-3 text-xs text-[#334155]">
                 <CheckCircle2 className="w-4 h-4 text-[#9c4f65] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#0f172a]">Direct Module Relevance:</strong> Study groups and tutoring are organized strictly by course codes and university modules.
+                  <strong className="text-[#0f172a]">Collaborative Learning:</strong> Students connect with peers to share knowledge and study together.
                 </div>
               </div>
               <div className="flex items-start gap-3 text-xs text-[#334155]">
@@ -76,7 +76,7 @@ export default function AboutPage() {
             <ul className="space-y-2 text-sm text-[#334155]">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#d88299]"></span>
-                Connect with classmates in your current module enrolments.
+                Connect with classmates and build a supportive academic community.
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#d88299]"></span>
@@ -98,7 +98,7 @@ export default function AboutPage() {
             <ul className="space-y-2 text-sm text-[#334155]">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#d88299]"></span>
-                Offer structured tutoring in modules you have excelled in.
+                Offer structured tutoring in subjects you have excelled in.
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#d88299]"></span>

@@ -18,8 +18,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-[#475569] max-w-md">
-              Connecting university students with classmates in their modules to form collaborative
-              study groups and receive targeted peer tutoring assistance.
+              Connecting university students to form collaborative study groups and receive
+              targeted peer tutoring assistance.
             </p>
             <div className="flex items-center gap-4 text-xs text-[#64748b] pt-1">
               <span className="flex items-center gap-1">
@@ -79,7 +79,7 @@ export default function Footer() {
               <li className="flex items-center gap-1.5">
                 <Mail className="w-4 h-4 text-[#9c4f65]" /> support@studyfinder.edu
               </li>
-              <li>Module Help Desk</li>
+              <li>Study Group Support</li>
               <li>Academic Integrity Guide</li>
             </ul>
           </div>

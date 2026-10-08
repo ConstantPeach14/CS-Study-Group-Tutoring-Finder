@@ -25,8 +25,8 @@ export default function HomePage() {
           </h1>
 
           <p className="mt-6 text-base sm:text-xl text-[#334155] max-w-2xl mx-auto leading-relaxed">
-            Never study alone again. Connect with university classmates taking the same modules,
-            form structured study teams, and get peer tutoring support.
+            Never study alone again. Connect with university classmates, form structured study
+            teams, and get peer tutoring support.
           </p>
 
           {/* Action Buttons */}
@@ -79,7 +79,7 @@ export default function HomePage() {
           <div className="mt-12 pt-8 border-t border-[#cbd5e1] max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
             <div className="flex items-center gap-3 bg-[#f1f4f8] p-3.5 rounded-xl border border-[#cbd5e1]">
               <CheckCircle2 className="w-5 h-5 text-[#9c4f65] shrink-0" />
-              <span className="text-xs font-bold text-[#1e293b]">Module-Centric Matching</span>
+              <span className="text-xs font-bold text-[#1e293b]">Peer Study Community</span>
             </div>
             <div className="flex items-center gap-3 bg-[#f1f4f8] p-3.5 rounded-xl border border-[#cbd5e1]">
               <CheckCircle2 className="w-5 h-5 text-[#9c4f65] shrink-0" />
@@ -113,7 +113,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-[#0f172a] mb-2">Classmate Study Groups</h3>
               <p className="text-sm text-[#475569] leading-relaxed mb-4">
-                Connect with peers registered in your specific modules. Form groups to tackle problem sets, discuss complex concepts, and prepare for exams.
+                Connect with classmates to tackle problem sets, discuss complex concepts, and prepare for exams together.
               </p>
               <Link href="/study-groups" className="text-xs font-bold text-[#9c4f65] hover:underline inline-flex items-center gap-1">
                 Explore Groups <ArrowRight className="w-3.5 h-3.5" />
@@ -127,7 +127,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-[#0f172a] mb-2">Verified Peer Tutors</h3>
               <p className="text-sm text-[#475569] leading-relaxed mb-4">
-                Get direct academic guidance from senior students who completed your course with distinctions and know the exact curriculum challenges.
+                Get direct academic guidance from experienced students who can help you master challenging subjects.
               </p>
               <Link href="/tutors" className="text-xs font-bold text-[#9c4f65] hover:underline inline-flex items-center gap-1">
                 Find Tutors <ArrowRight className="w-3.5 h-3.5" />
@@ -141,7 +141,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-[#0f172a] mb-2">Role-Based Profiles</h3>
               <p className="text-sm text-[#475569] leading-relaxed mb-4">
-                Dedicated student and tutor portals with secure authentication, direct module tracking, and seamless session booking workflows.
+                Dedicated student and tutor portals with secure authentication, profile management, and seamless session booking.
               </p>
               <Link href="/register" className="text-xs font-bold text-[#9c4f65] hover:underline inline-flex items-center gap-1">
                 Get Started <ArrowRight className="w-3.5 h-3.5" />

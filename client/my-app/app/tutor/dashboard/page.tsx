@@ -22,7 +22,6 @@ import {
   MapPin,
   Eye,
   AlertCircle,
-  Library,
 } from 'lucide-react';
 
 interface TutoringRequest {
@@ -70,17 +69,6 @@ interface StudyGroup {
   creator_surname: string;
 }
 
-interface TeachingModule {
-  id: number;
-  code: string;
-  name: string;
-  faculty: string;
-  description: string | null;
-  enrollment_role: string;
-  enrolled_at: string;
-  active_group_count: number;
-}
-
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 function formatDate(dateStr: string): string {
@@ -97,11 +85,9 @@ export default function TutorDashboardPage() {
   const [requests, setRequests] = useState<TutoringRequest[]>([]);
   const [tutorProfile, setTutorProfile] = useState<TutorProfile | null>(null);
   const [studyGroups, setStudyGroups] = useState<StudyGroup[]>([]);
-  const [teachingModules, setTeachingModules] = useState<TeachingModule[]>([]);
   const [loadingRequests, setLoadingRequests] = useState<boolean>(true);
   const [loadingProfile, setLoadingProfile] = useState<boolean>(true);
   const [loadingGroups, setLoadingGroups] = useState<boolean>(true);
-  const [loadingModules, setLoadingModules] = useState<boolean>(true);
   const [actionInProgress, setActionInProgress] = useState<number | null>(null);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -114,7 +100,6 @@ export default function TutorDashboardPage() {
       setLoadingRequests(true);
       setLoadingProfile(true);
       setLoadingGroups(true);
-      setLoadingModules(true);
       setErrorMessage(null);
       try {
         // 1. Fetch incoming tutoring requests
@@ -132,16 +117,10 @@ export default function TutorDashboardPage() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // 4. Fetch tutor teaching modules
-        const modPromise = fetch(`${API_BASE_URL}/api/users/me/modules`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const [reqRes, profileRes, sgRes, modRes] = await Promise.all([
+        const [reqRes, profileRes, sgRes] = await Promise.all([
           reqPromise,
           profilePromise,
           sgPromise,
-          modPromise,
         ]);
         if (!isMounted) return;
 
@@ -162,10 +141,6 @@ export default function TutorDashboardPage() {
           setStudyGroups(sgData.study_groups || []);
         }
 
-        if (modRes.ok) {
-          const modData = await modRes.json();
-          setTeachingModules(modData.modules || []);
-        }
       } catch {
         if (isMounted) {
           setErrorMessage('Could not connect to the server. Please check your connection and try again.');
@@ -175,7 +150,6 @@ export default function TutorDashboardPage() {
           setLoadingRequests(false);
           setLoadingProfile(false);
           setLoadingGroups(false);
-          setLoadingModules(false);
         }
       }
     };
@@ -278,17 +252,7 @@ export default function TutorDashboardPage() {
 
           {/* Quick Actions */}
           {/* Quick Actions */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            <Link
-              href="/modules"
-              className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center mx-auto mb-3 group-hover:bg-[#d88299] group-hover:text-white transition-colors">
-                <Library className="w-5 h-5" />
-              </div>
-              <span className="text-sm font-bold text-[#0f172a]">Course Directory</span>
-              <p className="text-[11px] text-[#64748b] mt-0.5">Explore & certify modules</p>
-            </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link
               href="/tutor/profile"
               className="bg-[#f1f4f8] rounded-2xl p-4 border border-[#cbd5e1] shadow-sm hover:border-[#d88299] hover:shadow-md transition-all group text-center"
@@ -334,30 +298,7 @@ export default function TutorDashboardPage() {
           </div>
 
           {/* Metric Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Teaching Modules */}
-            <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#64748b]">
-                  Teaching Modules
-                </span>
-                <div className="w-8 h-8 rounded-lg bg-[#fce7ec] text-[#9c4f65] border border-[#e89aae] flex items-center justify-center">
-                  <Library className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="text-3xl font-extrabold text-[#0f172a]">
-                {teachingModules.length}
-              </div>
-              <p className="text-xs text-[#64748b] mt-2">Certified tutoring courses</p>
-              <Link
-                href="/modules"
-                className="mt-4 pt-4 border-t border-[#cbd5e1] text-xs text-[#9c4f65] font-semibold flex items-center gap-1 hover:underline"
-              >
-                Manage tutoring subjects
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Student Inquiries */}
             <div className="bg-[#f1f4f8] rounded-2xl p-6 border border-[#cbd5e1] shadow-sm">
               <div className="flex items-center justify-between mb-4">
@@ -530,92 +471,6 @@ export default function TutorDashboardPage() {
                       <p className="text-sm text-[#334155]">{tutorProfile.bio}</p>
                     </div>
                   )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* My Certified Tutoring Modules Section */}
-          <div className="bg-[#f1f4f8] rounded-2xl border border-[#cbd5e1] shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-[#cbd5e1] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h2 className="text-lg font-bold text-[#0f172a] flex items-center gap-2">
-                  <Library className="w-5 h-5 text-[#9c4f65]" />
-                  My Certified Tutoring Modules
-                </h2>
-                <p className="text-xs text-[#475569] mt-0.5">
-                  University modules where you offer peer tutoring and academic consultations.
-                </p>
-              </div>
-              <Link
-                href="/modules"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#1e293b] bg-[#d88299] hover:bg-[#c46982] transition-colors self-start sm:self-auto"
-              >
-                + Certify New Module
-              </Link>
-            </div>
-
-            <div className="p-6">
-              {loadingModules ? (
-                <div className="py-12 flex justify-center">
-                  <Loader2 className="w-8 h-8 animate-spin text-[#d88299]" />
-                </div>
-              ) : teachingModules.length === 0 ? (
-                <div className="p-8 text-center bg-[#e8edf2] rounded-xl border border-dashed border-[#cbd5e1] space-y-2">
-                  <Library className="w-8 h-8 text-[#94a3b8] mx-auto" />
-                  <p className="text-sm font-semibold text-[#0f172a]">You haven&apos;t registered any tutoring modules yet</p>
-                  <p className="text-xs text-[#475569] max-w-sm mx-auto">
-                    Certify modules from the academic course directory to let students find you when seeking tutoring.
-                  </p>
-                  <div className="pt-2">
-                    <Link
-                      href="/modules"
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-[#1e293b] bg-[#d88299] hover:bg-[#c46982] transition-colors"
-                    >
-                      Browse Course Directory to Teach
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {teachingModules.map((mod) => (
-                    <div
-                      key={mod.id}
-                      className="bg-[#e8edf2] rounded-xl p-4 border border-[#cbd5e1] hover:border-[#d88299] transition-all flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className="px-2.5 py-0.5 rounded-lg bg-[#fce7ec] border border-[#e89aae] text-xs font-bold text-[#9c4f65]">
-                            {mod.code}
-                          </span>
-                          <span className="text-[10px] text-[#64748b] font-semibold truncate max-w-[130px]">
-                            {mod.faculty}
-                          </span>
-                        </div>
-                        <h4 className="text-sm font-bold text-[#0f172a] mb-1 line-clamp-1">{mod.name}</h4>
-                        <div className="flex items-center gap-1.5 text-xs text-[#475569] mt-2">
-                          <BookOpen className="w-3.5 h-3.5 text-[#9c4f65]" />
-                          <span>{mod.active_group_count} study groups active</span>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-[#cbd5e1] flex items-center justify-between gap-2">
-                        <Link
-                          href={`/modules/${mod.id}`}
-                          className="text-xs font-bold text-[#9c4f65] hover:underline"
-                        >
-                          View Course
-                        </Link>
-                        <Link
-                          href={`/study-groups/create?course_code=${encodeURIComponent(mod.code)}`}
-                          className="text-xs font-semibold text-[#334155] hover:text-[#9c4f65] transition-colors"
-                        >
-                          Host Group
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
                 </div>
               )}
             </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { useAuth } from '../context/AuthContext';
-import { Menu, X, BookOpen, User as UserIcon, LogOut, LayoutDashboard, Users, GraduationCap, Library } from 'lucide-react';
+import { Menu, X, BookOpen, User as UserIcon, LogOut, LayoutDashboard, Users, GraduationCap } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useAuth();

@@ -176,7 +176,7 @@ export default function StudyGroupsCatalogPage() {
         <div className="bg-[#f1f4f8] rounded-2xl p-6 sm:p-8 border border-[#cbd5e1] shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="space-y-1.5 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fce7ec] border border-[#9c4f65]/40 text-[#d88299] text-xs font-semibold">
-              <Users className="w-3.5 h-3.5" /> Module Study Groups
+              <Users className="w-3.5 h-3.5" /> Study Groups
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] tracking-tight">
               Study Groups

@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 export const metadata: Metadata = {
   title: 'Study Group & Tutoring Finder | University Peer Learning',
   description:
-    'Find fellow university classmates for module study groups and connect with verified peer tutors.',
+    'Find fellow university classmates for study groups and connect with verified peer tutors.',
 };
 
 export default function RootLayout({

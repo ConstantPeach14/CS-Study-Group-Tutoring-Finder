@@ -10,7 +10,6 @@ const userRoutes = require('./routes/userRoutes');
 const studyGroupRoutes = require('./routes/studyGroupRoutes');
 const tutorRoutes = require('./routes/tutorRoutes');
 const tutoringRequestRoutes = require('./routes/tutoringRequestRoutes');
-const moduleRoutes = require('./routes/moduleRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
